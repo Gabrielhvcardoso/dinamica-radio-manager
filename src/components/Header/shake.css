@@ -1,0 +1,87 @@
+.home.shake-animation {
+  animation: h-shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.timetable.shake-animation {
+  animation: t-shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.events.shake-animation {
+  animation: e-shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.programs.shake-animation {
+  animation: p-shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes h-shake {
+  10%, 90% {
+    transform: translate3d(-361px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(-358px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-364px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(-356px, 0, 0);
+  }
+}
+
+@keyframes t-shake {
+  10%, 90% {
+    transform: translate3d(-241px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(-238px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-244px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(-236px, 0, 0);
+  }
+}
+
+@keyframes e-shake {
+  10%, 90% {
+    transform: translate3d(-121px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(-118px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-124px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(-116px, 0, 0);
+  }
+}
+
+@keyframes p-shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
