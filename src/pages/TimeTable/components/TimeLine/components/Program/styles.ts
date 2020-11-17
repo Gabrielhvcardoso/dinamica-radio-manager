@@ -14,7 +14,8 @@ export const Container = styled.div`
   margin-right: 0.1%;
   overflow: hidden;
   padding: 10px;
-  width: ${HOUR * 3}%;
+  transition: .2s;
+  width: ${HOUR * 6}%;
 `;
 
 export const TimeDetail = styled.span`
