@@ -1,11 +1,20 @@
-import React from 'react';
-import { Container, ProgramTitle, TimeDetail } from './styles';
+import React, { RefObject } from 'react';
+import { Container, ProgramTitle, Draggable, TimeDetail } from './styles';
 
-const Program: React.FC = () => {
+interface ProgramProps {
+  dragConstraints?: RefObject<HTMLDivElement>,
+  title?: string,
+  style?: {},
+  onMouseDown?: (e: any) => void
+}
+
+const Program: React.FC<ProgramProps> = ({ dragConstraints, title, style,onMouseDown }) => {
   return (
-    <Container>
+    <Container dragConstraints={dragConstraints} style={style} onMouseDown={onMouseDown}>
+      <Draggable className="right" />
+
       <TimeDetail>00H - 04H</TimeDetail>
-      <ProgramTitle>Dawn live</ProgramTitle>
+      <ProgramTitle>{ title }</ProgramTitle>
     </Container>
   );
 }

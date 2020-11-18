@@ -8,7 +8,7 @@ export const TimeLine = styled.div`
   border-bottom: 1px solid #303030;
   border-top: 1px solid #303030;
   display: flex;
-
+  height: 100px;
   padding: 20px 0px;
 `;
 
