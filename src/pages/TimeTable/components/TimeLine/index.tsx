@@ -31,7 +31,7 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, previousItems, mo
       style={{
         x: spring(
           accumulated * meassureUnit,
-          { stiffness: 500, damping: 32 }
+          { stiffness: 500, damping: 50 }
         )
       }}
     >
