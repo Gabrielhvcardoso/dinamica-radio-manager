@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -41,7 +42,7 @@ const CategoryItemComponent = styled.span<CategoryItemComponentProps>`
   }
 `;
 
-export const Add = styled.span`
+export const Add = styled(motion.span)`
   background-color: #303030;
   border-radius: 16px;
   color: white;

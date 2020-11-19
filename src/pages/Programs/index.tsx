@@ -3,6 +3,8 @@ import { Container } from './styles';
 import { AnimateSharedLayout } from 'framer-motion';
 
 import Categories from './components/Categories';
+import CategoryContainer from './components/CategoryContainer';
+
 import ProgramList from './components/ProgramList';
 import ProgramContainer from './components/ProgramContainer';
 import Title from '../../components/Title';
@@ -14,12 +16,17 @@ const Programs: React.FC = () => {
     <ProgramsPageContextProvider>
       <Container>
         <Title>Programas</Title>
-        <Categories />
-
+        
         <AnimateSharedLayout type="crossfade">
+          <Categories />
+          <CategoryContainer />
+        </AnimateSharedLayout>
+
+        <AnimateSharedLayout type="switch">
           <ProgramList />
           <ProgramContainer />
         </AnimateSharedLayout>
+      
       </Container>
     </ProgramsPageContextProvider>
   );
