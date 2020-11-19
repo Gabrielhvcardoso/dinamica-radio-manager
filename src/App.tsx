@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 
+import Context from './context';
 import Routes from './routes';
 import history from './services/history';
 
@@ -11,7 +12,9 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend} >
       <Router history={history}>
-        <Routes />
+        <Context>
+          <Routes />
+        </Context>
       </Router>
     </DndProvider>
   );
