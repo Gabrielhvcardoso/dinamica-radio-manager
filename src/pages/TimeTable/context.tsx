@@ -7,6 +7,8 @@ import { sunday, monday, tuesday, wednesday, thursday, friday, saturday } from '
 export interface ScheduleProgram extends Program {
   order: number,
   accumulated: number,
+  duration: number,
+  startAt: number,
 }
 
 interface TimeTableInterface {
