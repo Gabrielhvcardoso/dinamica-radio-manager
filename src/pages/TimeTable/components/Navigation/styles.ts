@@ -17,10 +17,16 @@ export const Selected = styled.span`
   cursor: default;
   font-weight: 100;
   padding: 5px 15px;
+  text-align: center;
+  width: 130px;
 `;
 
-export const Selector = styled.span`
-  background-color: #202020;
+interface SelectorProps {
+  selected?: boolean; 
+}
+
+export const Selector = styled.span<SelectorProps>`
+  background-color: ${props => props.selected ? '#8BC298' : '#202020' };
   border-radius: 16px;
   color: white;
   cursor: pointer;

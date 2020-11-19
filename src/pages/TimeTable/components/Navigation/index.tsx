@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Selected, Selector, SelectorsContainer } from './styles';
 
 import Title from '../../../../components/Title';
+import TimeTableContext from '../../context';
 
 const Navigation: React.FC = () => {
+  const { filter, setFilter } = useContext(TimeTableContext);
+  
+  const filterList = [
+    { id: 0, name: "Domingo", abrev: "D" },
+    { id: 1, name: "Segunda-feira", abrev: "S" },
+    { id: 2, name: "Terça-feira", abrev: "T" },
+    { id: 3, name: "Quarta-feira", abrev: "Q" },
+    { id: 4, name: "Quinta-feira", abrev: "Q" },
+    { id: 5, name: "Sexta-feira", abrev: "S" },
+    { id: 6, name: "Sábado", abrev: "S" },
+  ]
+
   return (
     <Container>
       <Title>Programação</Title>
 
       <SelectorsContainer>
-        <Selected>Segunda-feira</Selected>
+        <Selected>
+          {
+            filterList.find((item) => item.id === filter)?.name
+          }
+        </Selected>
 
-        <Selector>S</Selector>
-        <Selector>T</Selector>
-        <Selector>Q</Selector>
-        <Selector>Q</Selector>
-        <Selector>S</Selector>
-        <Selector>S</Selector>
-        <Selector>D</Selector>
+        {
+          filterList.map(({ id, abrev }) => (
+            <Selector
+              onClick={() => setFilter(id)}
+              key={id}
+              selected={filter === id}
+            >{ abrev }
+            </Selector>
+          ))
+        }
       </SelectorsContainer>
     </Container>
   );

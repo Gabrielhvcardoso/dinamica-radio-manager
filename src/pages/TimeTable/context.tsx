@@ -1,8 +1,8 @@
 import update from 'immutability-helper'
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { Program } from '../../types/Program';
 
-import { data } from './sampleData';
+import { sunday, monday, tuesday, wednesday, thursday, friday, saturday } from './sampleData';
 
 export interface ScheduleProgram extends Program {
   order: number,
@@ -14,6 +14,9 @@ interface TimeTableInterface {
   moveProgram: (dragDirtyId: string, hoverDirtyId: string) => void,
   setProgramDuration: (programId: number, duration: number) => void,
   reorder: (newprograms?: Array<ScheduleProgram>) => void,
+
+  filter: number,
+  setFilter: (arg1: number) => void
 }
 
 // Context
@@ -21,14 +24,41 @@ interface TimeTableInterface {
 const TimeTableContext = createContext({} as TimeTableInterface);
 
 export const TimeTableContextProvider: React.FC = ({ children }) => {
-  const [programs, setPrograms] = useState<Array<ScheduleProgram>>(data);
+  const [filter, setFilter] = useState<number>(0);
+
+  const [programs, setPrograms] = useState<Array<ScheduleProgram>>(sunday);
+
+  useEffect(() => {
+    switch (filter) {
+      case 0:
+        setPrograms(sunday);
+        break;
+      case 1:
+        setPrograms(monday);
+        break;
+      case 2:
+        setPrograms(tuesday);
+        break;
+      case 3:
+        setPrograms(wednesday);
+        break;
+      case 4:
+        setPrograms(thursday);
+        break;
+      case 5:
+        setPrograms(friday);
+        break;
+      default:
+        setPrograms(saturday);
+        break;;
+    }
+  }, [filter]);
+
+  // Programs manipulation
 
   const setProgramDuration = (programId: number, duration: number) => {
     const index = programs.findIndex(item => item.programId === programId);
     const nextIndex = programs.findIndex(item => item.order === programs[index].order + 1);
-    const lastOrderIndex = programs.findIndex(item => item.order === programs.reduce((prev, curr) => prev > curr.order ? prev : curr.order, 0))
-
-    // console.log(programs[lastOrderIndex])
 
     let newPrograms;
 
@@ -109,8 +139,10 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     setPrograms(newPrograms);
   }
 
+  // Provider function
+
   return (
-    <TimeTableContext.Provider value={{ programs, moveProgram, setProgramDuration, reorder }}>
+    <TimeTableContext.Provider value={{ programs, moveProgram, setProgramDuration, reorder, filter, setFilter }}>
       { children }
     </TimeTableContext.Provider>
   );
