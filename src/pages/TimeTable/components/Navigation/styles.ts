@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -43,7 +44,7 @@ export const Selector = styled.span<SelectorProps>`
   }
 `;
 
-export const AddButton = styled.span<SelectorProps>`
+export const AddButton = styled(motion.span)<SelectorProps>`
   background-color: ${props => props.selected ? '#8BC298' : '#202020' };
   border-radius: 16px;
   color: white;

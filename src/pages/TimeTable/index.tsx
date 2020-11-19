@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from './styles';
+import { AnimateSharedLayout } from 'framer-motion';
 
 import Navigation from './components/Navigation';
 import ProgramSelector from './components/ProgramSelector';
@@ -10,10 +11,12 @@ import { TimeTableContextProvider } from './context';
 const TimeTable: React.FC = () => {
   return (
     <TimeTableContextProvider>
-      <ProgramSelector />
 
       <Container>
-        <Navigation />
+        <AnimateSharedLayout>
+          <Navigation />
+          <ProgramSelector />
+        </AnimateSharedLayout>
         <TimeLine />
       </Container>
     </TimeTableContextProvider>

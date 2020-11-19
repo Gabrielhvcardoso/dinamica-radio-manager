@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 export const Overlay = styled(motion.div).attrs({
   initial: { opacity: 0 },
   animate: { opacity: 1 },
+  exit: { opacity: 0 },
   transition: {
     type: 'spring',
     stiffness: 260,
@@ -25,6 +26,7 @@ export const Overlay = styled(motion.div).attrs({
 export const Container = styled(motion.div).attrs({
   initial: { scale: 0 },
   animate: { scale: 1 },
+  exit: { scale: 0 },
   transition: {
     type: 'spring',
     stiffness: 260,

@@ -38,7 +38,7 @@ const Navigation: React.FC = () => {
             </Selector>
           ))
         }
-      <AddButton onClick={() => setIsSelectorActive(true)}>Adicionar +</AddButton>
+      <AddButton layoutId="open-modal" onClick={() => setIsSelectorActive(true)}>Adicionar +</AddButton>
       </SelectorsContainer>
     </Container>
   );
