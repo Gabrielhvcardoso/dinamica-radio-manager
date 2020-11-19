@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Program } from '../../types/Program';
 
 import { sunday, monday, tuesday, wednesday, thursday, friday, saturday } from './sampleData';
@@ -31,27 +31,28 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
   useEffect(() => {
     switch (filter) {
       case 0:
-        setPrograms(sunday);
+        reorder(sunday);
         break;
       case 1:
-        setPrograms(monday);
+        reorder(monday);
         break;
       case 2:
-        setPrograms(tuesday);
+        reorder(tuesday);
         break;
       case 3:
-        setPrograms(wednesday);
+        reorder(wednesday);
         break;
       case 4:
-        setPrograms(thursday);
+        reorder(thursday);
         break;
       case 5:
-        setPrograms(friday);
+        reorder(friday);
         break;
       default:
-        setPrograms(saturday);
+        reorder(saturday);
         break;;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   // Programs manipulation
@@ -124,15 +125,17 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     newPrograms = newPrograms.sort((a,b) => a.programId > b.programId ? 1 : -1);
 
     const lastOrderIndex = newPrograms.findIndex(item => item.order === programs.reduce((prev, curr) => prev > curr.order ? prev : curr.order, 0))
-    if (newPrograms[lastOrderIndex].accumulated + newPrograms[lastOrderIndex].duration > 24) {
-      const newDuration = 24 - newPrograms[lastOrderIndex].accumulated;
+    if (lastOrderIndex > -1) {
+      if (newPrograms[lastOrderIndex].accumulated + newPrograms[lastOrderIndex].duration > 24) {
+        const newDuration = 24 - newPrograms[lastOrderIndex].accumulated;
 
-      if (newDuration >= 0.1) {
-        newPrograms = update(newPrograms, {
-          [lastOrderIndex]: { duration: { $set: newDuration } }
-        })
-      } else {
-        return;
+        if (newDuration >= 0.1) {
+          newPrograms = update(newPrograms, {
+            [lastOrderIndex]: { duration: { $set: newDuration } }
+          })
+        } else {
+          return;
+        }
       }
     }
 
