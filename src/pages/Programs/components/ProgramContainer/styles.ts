@@ -24,17 +24,26 @@ export const Overlay = styled(motion.div).attrs({
 `;
 
 export const Container = styled(motion.div).attrs({
+  initial: { scale: 0 },
+  animate: { scale: 1 },
+  exit: { scale: 0 },
   transition: {
     type: 'spring',
     stiffness: 500,
-    damping: 42
+    damping: 30
   }
 })`
   background-color: #303030;
   border-radius: 10px;
+  color: white;
   height: 500px;
   width: 660px;
-
+  padding: 20px;
   position: absolute;
+`;
 
+export const Title = styled.span`
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: capitalize;
 `;

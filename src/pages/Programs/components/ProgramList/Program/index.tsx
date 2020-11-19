@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container } from './styles';
+import { Container, Image, Overlay } from './styles';
 
 import ProgramsPageContext from '../../../context';
 import { Program as ProgramType } from '../../../../../types/Program';
@@ -9,11 +9,16 @@ interface ProgramProps {
 }
 
 const Program: React.FC<ProgramProps> = ({ program }) => {
-  const { programId } = program;
+  const { programId, image, title } = program;
   const { setSelected } = useContext(ProgramsPageContext);
   
   return (
-    <Container layoutId={programId.toString()} onClick={() => setSelected(programId)} />
+    <Container onClick={() => setSelected(programId)}>
+      <Overlay>
+        <p>{ title }</p>
+      </Overlay>
+      <Image src={image} alt={title} />
+    </Container>
   );
 }
 
