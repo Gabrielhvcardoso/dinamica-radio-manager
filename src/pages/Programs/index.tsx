@@ -1,33 +1,27 @@
 import React from 'react';
-import { Container, ProgramList } from './styles';
+import { Container } from './styles';
+import { AnimateSharedLayout } from 'framer-motion';
 
 import Categories from './components/Categories';
-import Program from './components/Program';
+import ProgramList from './components/ProgramList';
+import ProgramContainer from './components/ProgramContainer';
 import Title from '../../components/Title';
+
+import { ProgramsPageContextProvider } from './context';
 
 const Programs: React.FC = () => {
   return (
-    <Container>
-      <Title>Programas</Title>
-      <Categories />
+    <ProgramsPageContextProvider>
+      <Container>
+        <Title>Programas</Title>
+        <Categories />
 
-      <ProgramList>
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-        <Program />
-      </ProgramList>
-    </Container>
+        <AnimateSharedLayout type="crossfade">
+          <ProgramList />
+          <ProgramContainer />
+        </AnimateSharedLayout>
+      </Container>
+    </ProgramsPageContextProvider>
   );
 }
 

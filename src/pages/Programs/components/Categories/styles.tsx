@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import colors from '../../../../utils/colors';
 
 export const Container = styled.div`
   display: flex;
@@ -13,11 +12,10 @@ interface CategoryItemProps {
 }
 
 export const CategoryItem: React.FC<CategoryItemProps> = ({ children }) => {
-  const color = colors[Math.floor(Math.random() * colors.length)];
-  const textColor = color.isLight() ? "black" : "white";
+  const isSelected = false;
 
   return (
-    <CategoryItemComponent color={color.hex()} textColor={textColor}>
+    <CategoryItemComponent color={"#303030"} textColor={isSelected ? "#ffffff" : "grey"}>
       { children }
     </CategoryItemComponent>
   );
