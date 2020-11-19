@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Container, Selected, Selector, SelectorsContainer } from './styles';
+import { AddButton, Container, Selected, Selector, SelectorsContainer } from './styles';
 
 import Title from '../../../../components/Title';
 import TimeTableContext from '../../context';
 
 const Navigation: React.FC = () => {
-  const { filter, setFilter } = useContext(TimeTableContext);
+  const { filter, setFilter, setIsSelectorActive } = useContext(TimeTableContext);
   
   const filterList = [
     { id: 0, name: "Domingo", abrev: "D" },
@@ -38,6 +38,7 @@ const Navigation: React.FC = () => {
             </Selector>
           ))
         }
+      <AddButton onClick={() => setIsSelectorActive(true)}>Adicionar +</AddButton>
       </SelectorsContainer>
     </Container>
   );

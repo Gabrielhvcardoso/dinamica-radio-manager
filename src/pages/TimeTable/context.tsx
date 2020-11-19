@@ -16,7 +16,10 @@ interface TimeTableInterface {
   reorder: (newprograms?: Array<ScheduleProgram>) => void,
 
   filter: number,
-  setFilter: (arg1: number) => void
+  setFilter: (arg1: number) => void,
+
+  isSelectorActive: boolean,
+  setIsSelectorActive: (arg1: boolean) => void
 }
 
 // Context
@@ -24,6 +27,7 @@ interface TimeTableInterface {
 const TimeTableContext = createContext({} as TimeTableInterface);
 
 export const TimeTableContextProvider: React.FC = ({ children }) => {
+  const [isSelectorActive, setIsSelectorActive] = useState<boolean>(false);
   const [filter, setFilter] = useState<number>(0);
 
   const [programs, setPrograms] = useState<Array<ScheduleProgram>>(sunday);
@@ -145,7 +149,18 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
   // Provider function
 
   return (
-    <TimeTableContext.Provider value={{ programs, moveProgram, setProgramDuration, reorder, filter, setFilter }}>
+    <TimeTableContext.Provider value={{
+      programs,
+      moveProgram,
+      setProgramDuration,
+      reorder,
+      
+      filter,
+      setFilter,
+      
+      isSelectorActive,
+      setIsSelectorActive
+    }}>
       { children }
     </TimeTableContext.Provider>
   );

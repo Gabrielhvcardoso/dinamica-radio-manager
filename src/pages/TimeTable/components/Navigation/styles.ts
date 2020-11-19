@@ -8,6 +8,7 @@ export const Container = styled.div`
 export const SelectorsContainer = styled.div`
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 export const Selected = styled.span`
@@ -39,5 +40,27 @@ export const Selector = styled.span<SelectorProps>`
 
   &:hover {
     background-color: #303030;
+  }
+`;
+
+export const AddButton = styled.span<SelectorProps>`
+  background-color: ${props => props.selected ? '#8BC298' : '#202020' };
+  border-radius: 16px;
+  color: white;
+  cursor: pointer;
+  height: 32px;
+  float: right;
+  line-height: 32px;
+  margin: 0px 5px;
+  min-width: 32px;
+  padding: 0px 15px;
+  position: absolute;
+  right: 0px;
+  text-align: center;
+  transition: .2s;
+
+  &:hover {
+    background-color: #303030;
+    box-shadow: 0px 0px 10px #00000033;
   }
 `;
