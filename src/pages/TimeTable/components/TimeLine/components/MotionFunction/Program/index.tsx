@@ -1,7 +1,9 @@
 import React from 'react';
 import { DragSource, DropTarget, ConnectDragSource, ConnectDropTarget } from 'react-dnd';
-import { findDOMNode } from 'react-dom';
-import ItemTypes from '../ItemTypes';
+
+const ItemTypes = {
+  CARD: 'card',
+};
 
 
 interface Props {
@@ -67,6 +69,7 @@ interface TempProgramProps {
   isDragging: boolean,
   id: string,
   order: number,
+  horary: string,
   moveProgram: (dragId: string, hoverId: string) => void,
   title: string,
   style?: {},
@@ -74,7 +77,7 @@ interface TempProgramProps {
 
 class TempProgram extends React.Component<TempProgramProps> {
   render () {
-    const { style, id, title, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { style, horary, id, title, isDragging, connectDragSource, connectDropTarget } = this.props;
 
     const opacity = isDragging ? 0 : 1;
     const zIndex = isDragging ? 2 : 1;
@@ -88,15 +91,25 @@ class TempProgram extends React.Component<TempProgramProps> {
             opacity,
             zIndex,
             backgroundColor: '#E07A5F',
+            borderLeft: '1px solid black',
             borderRadius: 10,
             boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
             height: 100,
-            borderLeft: '1px solid black',
+            justifyContent: 'space-between',
             padding: 10,
             position: 'absolute',
           }}
         >
-          { title }
+          <span style={{
+            alignSelf: 'flex-start',
+            backgroundColor: 'white',
+            borderRadius: 16,
+            fontSize: 12,
+            padding: '1px 8px'
+          }}>{ horary }</span>
+          <span>{ title }</span>
         </div>
       )
     )

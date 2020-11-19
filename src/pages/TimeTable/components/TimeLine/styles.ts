@@ -11,9 +11,3 @@ export const TimeLine = styled.div`
   height: 100px;
   padding: 20px 0px;
 `;
-
-export const Marker = styled.span`
-  color: grey;
-  display: inline-block;
-  width: 4.16%;
-`;
