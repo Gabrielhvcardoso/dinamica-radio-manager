@@ -9,12 +9,15 @@ interface MotionFunctionProps {
   meassureUnit: number,
 }
 
+const resolveDecimalTime = (time: number): string => {
+  const hours = Math.floor(time);
+  const minutes = Math.round((time - hours) * 60).toString();
+  return `${(hours === 24 ? 0 : hours).toString().padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+} 
+
 const MotionFunction: React.FC<MotionFunctionProps> = ({ item, meassureUnit }) => {
   const { moveProgram } = useContext(TimeTableContext);
   const { accumulated, programId, order, title, duration } = item;
-
-  const convertToMinutes = (x: number) => (x * 60 / 100) < 10 ? `0${x * 60 / 100}` : (x * 60 / 100);
-  let horary = accumulated.toFixed(2).split(".")[0] + "H" + convertToMinutes(parseInt(accumulated.toFixed(2).split(".")[1]));
 
   return (
     <Motion
@@ -28,15 +31,18 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, meassureUnit }) =
       {
         ({ x }) => (
           <Program
-            horary={horary}
-            moveProgram={moveProgram}
+            duration={resolveDecimalTime(duration)}
+            startAt={resolveDecimalTime(accumulated)}
+            endAt={resolveDecimalTime(accumulated + duration)}
             id={`program-${programId}`}
+            meassureUnit={meassureUnit}
+            moveProgram={moveProgram}
             order={order}
-            title={title}
             style={{
               width: duration * meassureUnit + 'px',
               transform: `translate3d(${x}px, 0px, 0)`,
             }}
+            title={title}
           />
         )
       }

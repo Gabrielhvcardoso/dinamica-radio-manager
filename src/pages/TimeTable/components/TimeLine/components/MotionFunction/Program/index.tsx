@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { DragSource, DropTarget, ConnectDragSource, ConnectDropTarget } from 'react-dnd';
+import { Draggable } from './styles';
+import TimeTableContext, { ScheduleProgram } from '../../../../../context';
 
 const ItemTypes = {
   CARD: 'card',
 };
-
 
 interface Props {
   id: string,
@@ -66,18 +67,56 @@ const dragSourceHOC = DragSource(ItemTypes.CARD, programSource, (connect, monito
 interface TempProgramProps {
   connectDragSource: ConnectDragSource,
   connectDropTarget: ConnectDropTarget,
-  isDragging: boolean,
+  duration: string;
+  startAt: string,
+  endAt: string,
   id: string,
-  order: number,
-  horary: string,
+  isDragging: boolean,
+  meassureUnit: number,
   moveProgram: (dragId: string, hoverId: string) => void,
-  title: string,
+  order: number,
   style?: {},
+  title: string,
 }
+
+// Resizable
+
+const handleResize = (
+  e: SyntheticEvent<HTMLDivElement>,
+  meassureUnit: number,
+  setProgramDuration: (programId: number, duration: number) => void,
+) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  const { id } = (e.target as HTMLDivElement).parentNode as HTMLDivElement;
+  
+  const callFunction = (e: MouseEvent) => {
+    resize(e, id, meassureUnit, setProgramDuration);
+  }
+
+  window.addEventListener('mousemove', callFunction)
+  window.addEventListener('mouseup', () => {
+    window.removeEventListener('mousemove', callFunction);
+  });
+}
+
+const resize = (e: MouseEvent, elementId: string, measureUnit: number, setProgramDuration: (programId: number, duration: number) => void) => {
+  const element = document.getElementById(elementId);
+
+  if (element) {
+    const elementWidth = e.pageX - element.getBoundingClientRect().left;
+    const durationInHours = Math.round((elementWidth * 60) / measureUnit / 5) * 5 / 60
+    const programId = parseInt(elementId.split("-")[1]);
+    setProgramDuration(programId, durationInHours);
+  }
+}
+
+
 
 class TempProgram extends React.Component<TempProgramProps> {
   render () {
-    const { style, horary, id, title, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { style, startAt, endAt, id, title, duration, meassureUnit, isDragging, connectDragSource, connectDropTarget } = this.props;
 
     const opacity = isDragging ? 0 : 1;
     const zIndex = isDragging ? 2 : 1;
@@ -94,6 +133,7 @@ class TempProgram extends React.Component<TempProgramProps> {
             borderLeft: '1px solid black',
             borderRadius: 10,
             boxSizing: 'border-box',
+            cursor: 'grab',
             display: 'flex',
             flexDirection: 'column',
             height: 100,
@@ -108,12 +148,20 @@ class TempProgram extends React.Component<TempProgramProps> {
             borderRadius: 16,
             fontSize: 12,
             padding: '1px 8px'
-          }}>{ horary }</span>
-          <span>{ title }</span>
+          }}>{ duration } hrs</span>
+
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span>{ title }</span>
+            <span style={{ fontSize: 11 }}>{ `${startAt} - ${endAt}` }</span>
+          </div>
+          
+          <Draggable className="right-resizer" onMouseDown={(e) => handleResize(e, meassureUnit, this.context.setProgramDuration)} />
         </div>
       )
     )
   }
 }
+
+TempProgram.contextType = TimeTableContext;
 
 export default dropTargetHOC(dragSourceHOC(TempProgram));

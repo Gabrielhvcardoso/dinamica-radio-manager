@@ -10,11 +10,14 @@ const TimeLineTemp: React.FC = () => {
   const { programs } = useContext(TimeTableContext);
 
   const timelineRef = createRef<HTMLDivElement>();
-  const meassurementUnit = useDimensions(timelineRef).width / 24;
+  const { width } = useDimensions(timelineRef);
+  const meassurementUnit = width / 24;
+
+  // console.log(width);
   
   return (
-    <Container ref={timelineRef}>
-      <TimeLine>
+    <Container>
+      <TimeLine ref={timelineRef}>
         {
           programs.map((item) => (
             <MotionFunction
