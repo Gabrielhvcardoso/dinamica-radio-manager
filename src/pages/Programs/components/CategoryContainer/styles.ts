@@ -84,12 +84,4 @@ export const Button = styled.button`
   outline: none;
   transition: .6s;
   width: 100px;
-
-  &:hover {
-    transform: scale(1.01) translateX(-1%);
-  }
-
-  &:focus {
-    opacity: 0.7
-  }
 `;
