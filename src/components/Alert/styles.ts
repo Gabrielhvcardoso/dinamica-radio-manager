@@ -6,9 +6,9 @@ interface ContainerProps {
 }
 
 export const Container = styled(motion.div).attrs({
-  initial: { opacity: 0, translateX: 100 },
+  initial: { opacity: 0, translateX: -100 },
   animate: { opacity: 1, translateX: 0 },
-  exit: { opacity: 0, translateX: 100 },
+  exit: { opacity: 0, translateX: -100 },
   transition: {
     type: 'spring',
     stiffness: 500,
