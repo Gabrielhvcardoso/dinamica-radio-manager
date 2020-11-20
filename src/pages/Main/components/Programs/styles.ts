@@ -11,14 +11,6 @@ export const ScrollView = styled.div`
   display: flex;
   flex-direction: row;
   margin: 0px -50px;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding: 0px 50px 20px 50px;
-`;
-
-export const ProgramBox = styled.div`
-  background-color: #202020;
-  border-radius: 10px;
-  height: 150px;
-  margin: 0px 10px;
-  min-width: 150px;
 `;
