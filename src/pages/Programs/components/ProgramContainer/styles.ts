@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+export const ImageHeader = styled.img`
+  height: 150px;
+  object-fit: cover;
+  width: 100%;
+`;
+
 export const Overlay = styled(motion.div).attrs({
   initial: { opacity: 0 },
   animate: { opacity: 1 },
@@ -33,17 +39,26 @@ export const Container = styled(motion.div).attrs({
     damping: 30
   }
 })`
-  background-color: #303030;
+  background-color: #202020;
   border-radius: 10px;
   color: white;
   height: 500px;
-  width: 660px;
-  padding: 20px;
+  overflow: hidden;
   position: absolute;
+  width: 660px;
 `;
 
 export const Title = styled.span`
+  box-sizing: border-box;
   font-size: 32px;
   font-weight: 700;
+  height: 44px;
+  left: 0px;
+  line-height: 44px;
+  padding: 0px 15px 20px;
+  position: absolute;
+  text-shadow: 0px 0px 10px #000000ee;
   text-transform: capitalize;
+  top: 100px;
+  width: 100%;
 `;
