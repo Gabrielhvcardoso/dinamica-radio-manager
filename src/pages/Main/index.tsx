@@ -4,16 +4,19 @@ import { Container, VerticalView } from './styles';
 import Banner from './components/Banner';
 import Programs from './components/Programs';
 import Schedule from './components/Schedule';
+import { AnimatePresence } from 'framer-motion';
 
 const Main: React.FC = () => {
   return (
-    <Container>
-      <Programs />
-      <VerticalView>
-        <Schedule />
-        <Banner />
-      </VerticalView>
-    </Container>
+    <AnimatePresence>
+      <Container>
+        <Programs />
+        <VerticalView>
+          <Schedule />
+          <Banner />
+        </VerticalView>
+      </Container>
+    </AnimatePresence>
   );
 }
 

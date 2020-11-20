@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from './styles';
-import { AnimateSharedLayout } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
 import Categories from './components/Categories';
 import CategoryContainer from './components/CategoryContainer';
@@ -14,20 +14,22 @@ import { ProgramsPageContextProvider } from './context';
 const Programs: React.FC = () => {
   return (
     <ProgramsPageContextProvider>
-      <Container>
-        <Title>Programas</Title>
-        
-        <AnimateSharedLayout type="crossfade">
-          <Categories />
-          <CategoryContainer />
-        </AnimateSharedLayout>
+      <AnimatePresence>
+        <Container>
+          <Title>Programas</Title>
+          
+          <AnimateSharedLayout type="crossfade">
+            <Categories />
+            <CategoryContainer />
+          </AnimateSharedLayout>
 
-        <AnimateSharedLayout type="switch">
-          <ProgramList />
-          <ProgramContainer />
-        </AnimateSharedLayout>
-      
-      </Container>
+          <AnimateSharedLayout type="switch">
+            <ProgramList />
+            <ProgramContainer />
+          </AnimateSharedLayout>
+        
+        </Container>
+      </AnimatePresence>
     </ProgramsPageContextProvider>
   );
 }
