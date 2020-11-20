@@ -5,7 +5,7 @@ import Program from './Program';
 import ProgramsPageContext from '../../context';
 
 const ProgramList: React.FC = () => {
-  const { programs } = useContext(ProgramsPageContext);
+  const { filteredPrograms: programs } = useContext(ProgramsPageContext);
 
   return (
     <List>

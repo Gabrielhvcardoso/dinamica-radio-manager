@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -10,13 +10,17 @@ export const Container = styled.div`
 
 interface CategoryItemProps {
   children?: string;
+  isSelected: boolean;
+  onClick: (e: SyntheticEvent) => void
 }
 
-export const CategoryItem: React.FC<CategoryItemProps> = ({ children }) => {
-  const isSelected = false;
-
+export const CategoryItem: React.FC<CategoryItemProps> = ({ children, isSelected, onClick }) => {
   return (
-    <CategoryItemComponent color={"#303030"} textColor={isSelected ? "#ffffff" : "grey"}>
+    <CategoryItemComponent
+      color={"#303030"}
+      onClick={onClick}
+      textColor={isSelected ? "#ffffff" : "grey"}
+    >
       { children }
     </CategoryItemComponent>
   );
@@ -36,7 +40,12 @@ const CategoryItemComponent = styled.span<CategoryItemComponentProps>`
   margin: 0px 5px;
   padding: 2px 10px;
   transition: .2s;
-
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
   &:hover {
     opacity: 0.7;
   }
