@@ -5,5 +5,8 @@ export interface Banner {
   image?: string,
   link?: string,
   targetProgram?: number,
-  targetCategory?: number
+  targetCategory?: number,
+
+  createdAt: number,
+  expiresAt?: number
 }
