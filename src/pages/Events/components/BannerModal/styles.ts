@@ -2,15 +2,35 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import DTitle from '../../../../components/Title';
 
+export const ImageBackdrop = styled.img`
+  mask-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  height: 200px;
+  width: 100%;
+  left: 0px;
+  object-fit: cover;
+  position: absolute;
+  top: 0px;
+`;
+
+export const CloseButton = styled.div`
+  cursor: pointer;
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+`;
+
 export const Container = styled(motion.div)`
   background-color: #202020;
   box-sizing: border-box;
   color: white;
   display: flex;
   flex-direction: column;
-  height: 80%;
+  max-height: 80%;
   overflow-y: auto;
   padding: 50px;
+  position: relative;
   width: 80%;
 `;
 
@@ -19,7 +39,7 @@ export const Overlay = styled(motion.div).attrs({
   animate: { backgroundColor: 'rgba(0, 0, 0, 0.6)' },
   exit: { backgroundColor: 'transparent' }
 })`
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -91,7 +111,7 @@ export const ImagePicker = styled.label`
   padding: 10px 10px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: px;
+  margin-top: 5px;
   margin-bottom: 5px;
   max-width: 200px;
   text-align: center;
@@ -119,4 +139,9 @@ export const Button = styled.button`
     background-color: #8BC298;
 
   }
+`;
+
+export const Helper = styled.span`
+  font-size: 12px;
+  font-weight: 100;
 `;

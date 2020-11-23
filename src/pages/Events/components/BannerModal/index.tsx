@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Button, Container, Detail, Headline, ImagePicker, Overlay, Section, Textarea, TextInput, Title } from './styles';
+import { Button, CloseButton, Container, Detail, Headline, Helper, ImageBackdrop, ImagePicker, Overlay, Section, Textarea, TextInput, Title } from './styles';
 
 import Select from 'react-select';
 import { selectStyles } from './selectStyles';
@@ -8,79 +8,121 @@ import { selectStyles } from './selectStyles';
 import { formatDistanceToNow, addDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
+import ProgramsContext from '../../../../context/programs';
 import EventsContext from '../../context';
+
+import { mdiClose } from '@mdi/js';
+import { Icon } from '@mdi/react';
 
 const BannerModal: React.FC = () => {
   const { selected, setSelected } = useContext(EventsContext);
+  const { programs: contextPrograms, categories: contextCategories } = useContext(ProgramsContext);
+  
   const onDismiss = () => setSelected(null);
 
   const programs = [
     { value: 0, label: "Nenhum" },
-    { value: 1, label: "Program 1" },
-    { value: 2, label: "Program 2" },
-  ]
+    ...contextPrograms.map(({ programId, title }) => ({ value: programId, label: title }))
+  ];
 
   const categories = [
     { value: 0, label: "Nenhuma" },
-    { value: 1, label: "Category 1" },
-    { value: 2, label: "Category 2" },
-  ]
+    ...contextCategories.map(({ categoryId, name }) => ({ value: categoryId, label: name }))
+  ];
 
-  return(
+  const [event, setEvent] = useState(selected);
+  useEffect(() => setEvent(selected), [selected]);
+
+  return (
     <AnimatePresence>
       {
-        selected && (
+        event && (
           <Overlay onMouseDown={onDismiss}>
-            <Container onMouseDown={e => e.stopPropagation()} layoutId={`banner-${selected.bannerId}`}>
-              <Title>{ selected.title !== "" ? selected.title : "Criar evento" }</Title>
+            <Container onMouseDown={e => e.stopPropagation()} layoutId={`banner-${event.bannerId}`}>
+              <CloseButton onClick={onDismiss}>
+                <Icon path={mdiClose}
+                  size={1}
+                  color="white"
+                />
+              </CloseButton>
+              <Title>{ event.title !== "" ? event.title : "Criar evento" }</Title>
+
+              { event.image && <ImageBackdrop src={event.image} /> }
+
               <Detail>
                 { 'Criado há ' }
-                { formatDistanceToNow(selected.createdAt, { locale: ptBR }) }
+                { formatDistanceToNow(event.createdAt, { locale: ptBR }) }
                 {
-                  selected.expiresAt ? (
+                  event.expiresAt ? (
                     ' - expira em ' +
-                    formatDistanceToNow(addDays(selected.createdAt, 2), { locale: ptBR })    
+                    formatDistanceToNow(addDays(event.createdAt, 2), { locale: ptBR })    
                   ) : <></>
                 }
               </Detail>
               <br />
-              <Section>
-                <Headline>Data de expiração</Headline>
-                <TextInput type="date" style={{ maxWidth: 200 }} placeholder="00/00/0000" />
-              </Section>
 
-              <Section>
-                <Headline>Imagem</Headline>
-                <input type="file" id="filepicker" style={{ display: 'none' }} />
-                <ImagePicker htmlFor="filepicker">
-                  Selecione um arquivo
-                </ImagePicker>
-              </Section>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "flex-start", marginTop: 20, marginBottom: 20 }}>
+                <Section style={{ maxWidth: 200 }}>
+                  <Headline>Data de expiração</Headline>
+                  <TextInput type="date" placeholder="00/00/0000" />
+                  <Helper>Data para o anúncio parar de ser exibido. (opcional)</Helper>
+                </Section>
 
-              <Section>
-                <Headline>Programa alvo</Headline>
-                <Select styles={selectStyles} options={programs} defaultValue={programs[0]} theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })} />
-              </Section>
+                <Section style={{ maxWidth: 200 }}>
+                  <Headline>Imagem</Headline>
+                  <input type="file" id="filepicker" style={{ display: 'none' }} />
+                  <ImagePicker htmlFor="filepicker">
+                    Selecione um arquivo
+                  </ImagePicker>
+                  <Helper>Arquivo de imagem para ser exibido no aplicativo. (opcional)</Helper>
+                </Section>
 
-              <Section>
-                <Headline>Categoria alvo</Headline>
-                <Select styles={selectStyles} options={categories} defaultValue={categories[0]} theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })} />
-              </Section>
+                <Section style={{ maxWidth: 200 }}>
+                  <Headline>Programa alvo</Headline>
+                  <Select
+                    styles={selectStyles}
+                    options={programs}
+                    defaultValue={programs[0]}
+                    theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })}
+                  />
+                  <Helper>O programa selecionado e suas informações serão exibidos no anúncio. (opcional)</Helper>
+                </Section>
+
+                <Section style={{ maxWidth: 200 }}>
+                  <Headline>Categoria alvo</Headline>
+                  <Select styles={selectStyles} options={categories} defaultValue={categories[0]} theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })} />
+                  <Helper>A categoria selecionada e seus programas serão exibidos no anúncio. (opcional)</Helper>
+                </Section>
+              </div>
 
               <Section>
                 <Headline>Link de redirecionamento</Headline>
                 <TextInput type="url" placeholder="https://domain.com" />
+                <Helper>
+                  (opcional) Ao clicar no anúncio o usuário será redirecionado para esse link.
+                  Caso haja mais informações para exibir, um botão "acessar" será exibido na parte interior do anúncio.
+                </Helper>
               </Section>
 
-              <Section>
+              <Section style={{ marginTop: 40 }}>
                 <Headline>Descrição</Headline>
-                <Textarea>{ selected.description }</Textarea>
+                <Textarea>{ event.description }</Textarea>
+                <Helper>
+                  (opcional) Será exibido na parte interna do anúncio.
+                </Helper>
               </Section>
             
-
+              <div style={{ padding: 20 , backgroundColor: '#17171766', borderRadius: 4, marginTop: 30 }}>
+                <Helper>
+                  É importante ressaltar que não é possível exibir um programa e uma categoria alvo ao mesmo tempo. Caso isso aconteça, haverá a exibição do programa e será adicionado a opção
+                  do usuário "ver mais programas".
+                </Helper>
+              </div>
+              
               <div style={{ display: 'flex', marginTop: 20, justifyContent: 'flex-end' }}>
                 <Button>Salvar alterações</Button>
               </div>
+              
             </Container>
           </Overlay>
         )

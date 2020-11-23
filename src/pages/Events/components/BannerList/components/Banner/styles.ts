@@ -11,18 +11,19 @@ export const Container = styled(motion.div)<ContainerProps>`
   cursor: pointer;
   flex: 1;
   margin: 0px 10px;
-  padding: 15px;
+  object-fit: cover;
   transition: .6s transform;
 
   &:hover {
     z-index: 1;
-    transform: scale(1.01);
+    transform: scale(1.1);
     box-shadow: 0px 0px 20px #22222222;
   }
 `;
 
 
-export const Title = styled.span`  
-  font-size: 56px;
-  font-weight: 100;
+export const Title = styled.span`
+  color: #8bc298;
+  font-size: 42px;
+  line-height: 42px;
 `;

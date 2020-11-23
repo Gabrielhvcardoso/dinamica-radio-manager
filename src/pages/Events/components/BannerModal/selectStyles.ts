@@ -15,6 +15,7 @@ export const selectStyles: StylesConfig = {
     backgroundColor: '#171717',
     border: 'none',
     borderRadius: 4,
+    marginTop: 5,
     marginBottom: 10,
     outline: 'none',
     width: 200,
