@@ -26,7 +26,7 @@ interface ContainerProps {
 }
 
 export const Container = styled(motion.div)<ContainerProps>`
-  align-self: ${props => props.isMobile ? 'flex-start' : 'auto'};
+  align-self: ${props => props.isMobile ? 'flex-start' : 'flex-end'};
   background-color: #202020;
   box-sizing: border-box;
   color: white;
