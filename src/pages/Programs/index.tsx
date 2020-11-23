@@ -14,22 +14,20 @@ import { ProgramsPageContextProvider } from './context';
 const Programs: React.FC = () => {
   return (
     <ProgramsPageContextProvider>
-      <AnimatePresence>
+      <CategoryContainer />
+      <ProgramContainer />
+    
+      <AnimateSharedLayout type="switch">
+        <AnimatePresence>
         <Container>
           <Title>Programas</Title>
           
-          <AnimateSharedLayout type="crossfade">
-            <Categories />
-            <CategoryContainer />
-          </AnimateSharedLayout>
-
-          <AnimateSharedLayout type="switch">
-            <ProgramList />
-            <ProgramContainer />
-          </AnimateSharedLayout>
+          <Categories />
+          <ProgramList />
         
         </Container>
-      </AnimatePresence>
+        </AnimatePresence>
+      </AnimateSharedLayout>
     </ProgramsPageContextProvider>
   );
 }
