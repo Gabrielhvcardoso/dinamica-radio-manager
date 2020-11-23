@@ -6,7 +6,7 @@ export const Container = styled(motion.div).attrs({
   animate: { backgroundColor: 'rgba(0, 0, 0, 0.6)' },
   exit: { backgroundColor: 'transparent' },
 })`
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
