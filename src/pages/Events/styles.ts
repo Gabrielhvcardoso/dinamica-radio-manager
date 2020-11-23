@@ -11,10 +11,3 @@ export const Container = styled(motion.div).attrs({
   flex-direction: column;
   margin: 40px 50px;
 `;
-
-export const Row = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  margin: 10px -10px;
-`;

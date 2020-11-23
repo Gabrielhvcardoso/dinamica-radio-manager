@@ -1,10 +1,11 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 interface ContainerProps {
   color?: string;
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled(motion.div)<ContainerProps>`
   align-self: stretch;
   background-color: ${props => props.color ?? "#333"};
   cursor: pointer;

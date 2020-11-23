@@ -1,26 +1,18 @@
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import React from 'react';
-import { Container, Row } from './styles';
-
-import Title from '../../components/Title/index';
-import Banner from './components/Banner';
-import { AnimatePresence } from 'framer-motion';
+import BannerList from './components/BannerList';
+import BannerModal from './components/BannerModal';
+import { EventsContextProvider } from './context';
 
 const Events: React.FC = () => {
   return (
     <AnimatePresence>
-      <Container>
-        <Title>Eventos</Title>
-
-        <Row>
-          <Banner />
-          <Banner />
-        </Row>
-        <Row>
-          <Banner />
-          <Banner />
-          <Banner />
-        </Row>
-      </Container>
+      <EventsContextProvider>
+        <AnimateSharedLayout>
+          <BannerList />
+          <BannerModal />
+        </AnimateSharedLayout>
+      </EventsContextProvider>
     </AnimatePresence>
   );
 }
