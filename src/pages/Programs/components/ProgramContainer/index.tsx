@@ -1,8 +1,11 @@
 import React, { useContext, useMemo } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Container, ImageHeader, Overlay, Title } from './styles';
+import { CategoryList, CategoryTag, Container, ImageEdit, ImageHeader, ImageOverlay, Overlay, Title } from './styles';
 
 import ProgramsPageContext from '../../context';
+
+import { Icon } from '@mdi/react';
+import { mdiImageEditOutline } from '@mdi/js';
 
 const ProgramContainer: React.FC = () => {
   const { programs, selected, setSelected } = useContext(ProgramsPageContext);
@@ -20,15 +23,32 @@ const ProgramContainer: React.FC = () => {
     <AnimatePresence>
       { selected && (
         <Overlay onClick={onDismiss}>
-          <Container layoutId={selected?.toString()}>
+          <Container onClick={e => e.stopPropagation()} layoutId={selected?.toString()}>
 
             <ImageHeader src={ program?.image } alt={ program?.title } />
 
             <div style={{ margin: 20 }}>
-              <Title>{ program?.title }</Title>
-              <p>Configurações sensíveis</p>
-            </div>
-          
+              <ImageOverlay>
+                <Title>{ program?.title }</Title>
+                <ImageEdit>
+                  <Icon path={mdiImageEditOutline}
+                    title="Alterar imagem"
+                    size={1}
+                    color="#ffffff"
+                  />
+                </ImageEdit>
+              </ImageOverlay>
+
+              <CategoryList>
+                { program?.tags ? program.tags.map((tag) => (
+                  <CategoryTag>{ tag }</CategoryTag>
+                )) : (
+                  <CategoryTag>Nenhuma categoria</CategoryTag>
+                )}
+
+                <CategoryTag style={{ cursor: 'pointer' }}>Atribuir</CategoryTag>
+              </CategoryList>
+            </div>          
           </Container>
         </Overlay>
       )}
