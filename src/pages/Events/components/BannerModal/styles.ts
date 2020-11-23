@@ -1,9 +1,13 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import DTitle from '../../../../components/Title';
 
 export const Container = styled(motion.div)`
   background-color: #202020;
+  box-sizing: border-box;
+  color: white;
   height: 80%;
+  padding: 50px;
   width: 80%;
 `;
 
@@ -24,3 +28,10 @@ export const Overlay = styled(motion.div).attrs({
   transition: .2s;  
 `;
 
+export const Title = styled(DTitle)`
+  margin: 0px;
+`;
+
+export const Detail = styled.span`
+  font-size: 14px;
+`;

@@ -22,8 +22,8 @@ const ProgramContainer: React.FC = () => {
   return (
     <AnimatePresence>
       { selected && (
-        <Overlay onClick={onDismiss}>
-          <Container onClick={e => e.stopPropagation()} layoutId={selected?.toString()}>
+        <Overlay onMouseDown={onDismiss}>
+          <Container onMouseDown={e => e.stopPropagation()} layoutId={selected?.toString()}>
 
             <ImageHeader src={ program?.image } alt={ program?.title } />
 

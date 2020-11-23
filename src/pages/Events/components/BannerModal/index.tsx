@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Container, Overlay } from './styles';
+import { Container, Overlay, Title, Detail } from './styles';
+
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import EventsContext from '../../context';
 
@@ -12,8 +15,11 @@ const BannerModal: React.FC = () => {
     <AnimatePresence>
       {
         selected && (
-          <Overlay onClick={onDismiss}>
-            <Container layoutId={`banner-${selected.bannerId}`} />
+          <Overlay onMouseDown={onDismiss}>
+            <Container onMouseDown={e => e.stopPropagation()} layoutId={`banner-${selected.bannerId}`}>
+              <Title>{ selected.title }</Title>
+              <Detail>Há { formatDistanceToNow(selected.createdAt, { locale: ptBR }) }</Detail>
+            </Container>
           </Overlay>
         )
       }

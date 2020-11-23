@@ -12,8 +12,8 @@ const ProgramSelector: React.FC = () => {
     <AnimatePresence>
       {
         isSelectorActive && (
-          <Overlay onClick={onDismiss}>
-            <Container layoutId="open-modal">
+          <Overlay onMouseDown={onDismiss}>
+            <Container onMouseDown={e => e.stopPropagation()} layoutId="open-modal">
               <Header>
                 <Title>Selecione um programa</Title>
                 <CloseButton onClick={onDismiss}>+</CloseButton>

@@ -2,16 +2,15 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Overlay = styled(motion.div).attrs({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
+  initial: { backgroundColor: 'transparent' },
+  animate: { backgroundColor: 'rgba(0, 0, 0, 0.6)' },
+  exit: { backgroundColor: 'transparent' },
   transition: {
     type: 'spring',
     stiffness: 260,
     damping: 20
   }
 })`
-  background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
   top: 0;
   right: 0;
@@ -23,16 +22,7 @@ export const Overlay = styled(motion.div).attrs({
   align-items: center;
 `;
 
-export const Container = styled(motion.div).attrs({
-  initial: { scale: 0 },
-  animate: { scale: 1 },
-  exit: { scale: 0 },
-  transition: {
-    type: 'spring',
-    stiffness: 260,
-    damping: 32
-  }
-})`
+export const Container = styled(motion.div)`
   background-color: #171717;
   height: 550px;
   overflow-y: scroll;
