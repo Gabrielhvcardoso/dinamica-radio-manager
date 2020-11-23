@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import React, { useContext, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Button, Container, Overlay, TextInput, TextInputSpan, Title } from './styles';
@@ -9,22 +10,33 @@ const CategoryContainer: React.FC = () => {
   const { openCategory, setOpenCategory, categories, setCategories } = useContext(ProgramsPageContext);
   const onDismiss = () => setOpenCategory(false);
 
-  const [modalError, setModalError] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string | null>(null);
 
   const showAlert = (message: string, error: boolean = false) => {
     setModalMessage(message);
-    setModalError(error);
-
-    setTimeout(() => {
-      setModalMessage(null);
-    }, 5000);
+    setTimeout(() => setModalMessage(null), 5000);
   }
 
   const [categoryTitle, setCategoryTitle] = useState<string>("");
 
   const handleSave = () => {
-    showAlert("Teste de alerta");
+    let errors = [
+      { status: categoryTitle.length < 3, message: "Título muito curto, digite pelo menos 3 caracteres." },
+      { status: categoryTitle.length > 40, message: "Título muito longo, o título deve ter no máximo 40 caracteres." },
+      { status: categories.some(item => item.name === categoryTitle), message: "Já existe uma categoria com esse nome" },
+    ];
+
+    const isError = errors.find(item => item.status); 
+    if (isError) return showAlert(isError.message);
+  
+    setCategories(update(categories, {
+      $push: [{
+        categoryId: categories[categories.length - 1].categoryId + 1,
+        name: categoryTitle
+      }]
+    }));
+
+    onDismiss();
   }
 
   return (
@@ -37,9 +49,7 @@ const CategoryContainer: React.FC = () => {
               <AnimatePresence>
                 {
                   Boolean(modalMessage) && (
-                    <Alert error>
-                      Título da categoria não pode ultrapassar 40 caracteres e agora vou escrever um texto longo para demonstrar a quebra de linha no tamanho máximo
-                    </Alert>
+                    <Alert error >{ modalMessage }</Alert>
                   )
                 }
               </AnimatePresence>

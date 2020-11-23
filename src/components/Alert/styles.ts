@@ -19,6 +19,7 @@ export const Container = styled(motion.div).attrs({
   border-radius: 10px;
   bottom: 20px;
   color: ${props => props.error ? "red" : "white"};
+  min-width: 400px;
   max-width: 400px;
   padding: 10px;
   position: absolute;
