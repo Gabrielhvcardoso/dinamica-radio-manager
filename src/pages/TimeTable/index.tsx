@@ -12,7 +12,7 @@ const TimeTable: React.FC = () => {
   return (
     <TimeTableContextProvider>
       <AnimatePresence>
-        <Container>
+        <Container className="screen-resize">
           <AnimateSharedLayout>
             <Navigation />
             <ProgramSelector />

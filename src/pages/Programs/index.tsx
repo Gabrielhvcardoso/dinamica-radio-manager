@@ -19,7 +19,7 @@ const Programs: React.FC = () => {
     
       <AnimateSharedLayout type="switch">
         <AnimatePresence>
-        <Container>
+        <Container className="screen-resize">
           <Title>Programas</Title>
           
           <Categories />

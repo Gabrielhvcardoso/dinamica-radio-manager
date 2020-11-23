@@ -1,11 +1,21 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Row = styled(motion.div)`
+interface RowProps {
+  isMobile: boolean;
+}
+
+export const Row = styled(motion.div)<RowProps>`
   display: flex;
   flex: 1;
-  flex-direction: row;
+  flex-direction: ${props => props.isMobile ? "column" : "row"};
   margin: 10px -10px;
+
+  ${props => props.isMobile ? `
+    & *:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  ` : ""}
 `;
 
 export const Container = styled(motion.div).attrs({

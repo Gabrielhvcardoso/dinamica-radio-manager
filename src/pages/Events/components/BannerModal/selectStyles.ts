@@ -18,7 +18,6 @@ export const selectStyles: StylesConfig = {
     marginTop: 5,
     marginBottom: 10,
     outline: 'none',
-    width: 200,
   }),
   singleValue: (provided, state) => ({
     ...provided,

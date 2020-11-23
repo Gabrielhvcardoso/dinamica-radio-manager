@@ -49,3 +49,7 @@ code {
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+.app.mobile .screen-resize {
+  margin-bottom: 100px;
+}

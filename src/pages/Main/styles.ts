@@ -12,9 +12,13 @@ export const Container = styled(motion.div).attrs({
   flex: 1;
 `;
 
-export const VerticalView = styled.div`
+interface View {
+  isMobile: boolean
+}
+
+export const VerticalView = styled.div<View>`
   display: flex;
   flex: 1;
-  flex-direction: row;
+  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
   margin-top: 25px;
 `;

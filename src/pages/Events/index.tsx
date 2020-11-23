@@ -9,7 +9,7 @@ const Events: React.FC = () => {
     <AnimatePresence>
       <EventsContextProvider>
         <AnimateSharedLayout>
-          <BannerList />
+          <BannerList className="screen-resize" />
           <BannerModal />
         </AnimateSharedLayout>
       </EventsContextProvider>

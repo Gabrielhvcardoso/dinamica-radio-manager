@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 interface ContainerProps {
   error?: boolean | null;
+  isMobile?: boolean;
 }
 
 export const Container = styled(motion.div).attrs({
@@ -17,12 +18,14 @@ export const Container = styled(motion.div).attrs({
 })<ContainerProps>`
   background-color: #303030;
   border-radius: 10px;
-  bottom: 20px;
+  bottom: ${props => props.isMobile ? "90px" : "20px"};
   color: ${props => props.error ? "red" : "white"};
-  min-width: 400px;
-  max-width: 400px;
+  min-width: 10px;
+  max-width: ${props => props.isMobile ? "95%" : "400px"};
   padding: 10px;
-  position: absolute;
+  position: fixed;
+  ${props => props.isMobile ? "left: 20px;" : ""}
+  
   right: 20px;
   z-index: 10;
 `;

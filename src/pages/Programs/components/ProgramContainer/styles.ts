@@ -31,7 +31,7 @@ export const Overlay = styled(motion.div).attrs({
   },
 })`
   background-color: rgba(0, 0, 0, 0.6);
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -59,6 +59,7 @@ export const Container = styled(motion.div).attrs({
   overflow: hidden;
   position: absolute;
   width: 660px;
+  max-width: 95%;
 `;
 
 export const ImageOverlay = styled.div`

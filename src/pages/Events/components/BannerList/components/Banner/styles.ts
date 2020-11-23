@@ -25,5 +25,6 @@ export const Container = styled(motion.div)<ContainerProps>`
 export const Title = styled.span`
   color: #8bc298;
   font-size: 42px;
+  font-weight: 600;
   line-height: 42px;
 `;

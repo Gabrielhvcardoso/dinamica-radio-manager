@@ -21,17 +21,24 @@ export const CloseButton = styled.div`
   z-index: 1;
 `;
 
-export const Container = styled(motion.div)`
+interface ContainerProps {
+  isMobile?: boolean;
+}
+
+export const Container = styled(motion.div)<ContainerProps>`
+  align-self: ${props => props.isMobile ? 'flex-start' : 'auto'};
   background-color: #202020;
   box-sizing: border-box;
   color: white;
   display: flex;
   flex-direction: column;
-  max-height: 80%;
+  margin-bottom: 100px;
+  max-height: ${props => props.isMobile ? '100%' : '80%'};
+  margin-top: ${props => props.isMobile ? '20px' : '0px'};
   overflow-y: auto;
-  padding: 50px;
+  padding: ${props => props.isMobile ? '20px 20px 110px 20px' : '50px'};
   position: relative;
-  width: 80%;
+  width: ${props => props.isMobile ? '95%' : '80%'};
 `;
 
 export const Overlay = styled(motion.div).attrs({
@@ -53,6 +60,7 @@ export const Overlay = styled(motion.div).attrs({
 
 export const Title = styled(DTitle)`
   margin: 0px;
+  line-height: 100%;
 `;
 
 export const Detail = styled.span`
@@ -87,7 +95,7 @@ export const TextInput = styled.input`
   margin-top: 5px;
   margin-bottom: 5px;
   padding: 10px;
-  resize: none;
+  width: 100%;
 `;
 
 export const Textarea = styled.textarea`
@@ -113,7 +121,6 @@ export const ImagePicker = styled.label`
   cursor: pointer;
   margin-top: 5px;
   margin-bottom: 5px;
-  max-width: 200px;
   text-align: center;
   transition: .2s;
 

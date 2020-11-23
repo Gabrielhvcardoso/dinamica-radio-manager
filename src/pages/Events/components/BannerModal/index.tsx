@@ -8,6 +8,7 @@ import { selectStyles } from './selectStyles';
 import { formatDistanceToNow, addDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
+import MobileContext from '../../../../context/mobile';
 import ProgramsContext from '../../../../context/programs';
 import EventsContext from '../../context';
 
@@ -15,8 +16,9 @@ import { mdiClose } from '@mdi/js';
 import { Icon } from '@mdi/react';
 
 const BannerModal: React.FC = () => {
-  const { selected, setSelected } = useContext(EventsContext);
+  const { isMobile } = useContext(MobileContext);
   const { programs: contextPrograms, categories: contextCategories } = useContext(ProgramsContext);
+  const { selected, setSelected } = useContext(EventsContext);
   
   const onDismiss = () => setSelected(null);
 
@@ -38,7 +40,7 @@ const BannerModal: React.FC = () => {
       {
         event && (
           <Overlay onMouseDown={onDismiss}>
-            <Container onMouseDown={e => e.stopPropagation()} layoutId={`banner-${event.bannerId}`}>
+            <Container isMobile={isMobile} onMouseDown={e => e.stopPropagation()} layoutId={`banner-${event.bannerId}`}>
               <CloseButton onClick={onDismiss}>
                 <Icon path={mdiClose}
                   size={1}
@@ -61,14 +63,14 @@ const BannerModal: React.FC = () => {
               </Detail>
               <br />
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "flex-start", marginTop: 20, marginBottom: 20 }}>
-                <Section style={{ maxWidth: 200 }}>
+              <div style={{ display: 'flex', flexDirection: isMobile ? "column" : "row", justifyContent: 'space-between', alignItems: "flex-start", marginTop: 20, marginBottom: 20 }}>
+                <Section style={{ width: isMobile ? "100%" : 200 }}>
                   <Headline>Data de expiração</Headline>
                   <TextInput type="date" placeholder="00/00/0000" />
                   <Helper>Data para o anúncio parar de ser exibido. (opcional)</Helper>
                 </Section>
 
-                <Section style={{ maxWidth: 200 }}>
+                <Section style={{ width: isMobile ? "100%" : 200 }}>
                   <Headline>Imagem</Headline>
                   <input type="file" id="filepicker" style={{ display: 'none' }} />
                   <ImagePicker htmlFor="filepicker">
@@ -77,7 +79,7 @@ const BannerModal: React.FC = () => {
                   <Helper>Arquivo de imagem para ser exibido no aplicativo. (opcional)</Helper>
                 </Section>
 
-                <Section style={{ maxWidth: 200 }}>
+                <Section style={{ width: isMobile ? "100%" : 200 }}>
                   <Headline>Programa alvo</Headline>
                   <Select
                     styles={selectStyles}
@@ -88,7 +90,7 @@ const BannerModal: React.FC = () => {
                   <Helper>O programa selecionado e suas informações serão exibidos no anúncio. (opcional)</Helper>
                 </Section>
 
-                <Section style={{ maxWidth: 200 }}>
+                <Section style={{ width: isMobile ? "100%" : 200 }}>
                   <Headline>Categoria alvo</Headline>
                   <Select styles={selectStyles} options={categories} defaultValue={categories[0]} theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })} />
                   <Helper>A categoria selecionada e seus programas serão exibidos no anúncio. (opcional)</Helper>

@@ -16,7 +16,11 @@ export const Overlay = styled(motion.div)`
   }
 `;
 
-export const Container = styled(motion.div)`
+interface ContainerProps {
+  isMobile: boolean;
+}
+
+export const Container = styled(motion.div)<ContainerProps>`
   background-color: #303030;
   border-radius: 10px;
   cursor: pointer;
@@ -26,6 +30,7 @@ export const Container = styled(motion.div)`
   position: relative;
   transition: .2s;
   width: 150px;
+  ${props => props.isMobile ? "flex: 1 0 auto;" : ""}
 
   &:hover {
     transform: scale(1.1);

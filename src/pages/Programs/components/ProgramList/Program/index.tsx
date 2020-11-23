@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Container, Image, Overlay } from './styles';
 
+import MobileContext from '../../../../../context/mobile';
 import ProgramsPageContext from '../../../context';
 import { Program as ProgramType } from '../../../../../types/Program';
 
@@ -10,10 +11,11 @@ interface ProgramProps {
 
 const Program: React.FC<ProgramProps> = ({ program }) => {
   const { programId, image, title } = program;
+  const { isMobile } = useContext(MobileContext);
   const { setSelected } = useContext(ProgramsPageContext);
   
   return (
-    <Container onClick={() => setSelected(programId)}>
+    <Container isMobile={isMobile} onClick={() => setSelected(programId)}>
       <Overlay>
         <p>{ title }</p>
       </Overlay>
