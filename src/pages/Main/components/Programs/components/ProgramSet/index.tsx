@@ -6,7 +6,7 @@ import { Container, ProgramItem } from './styles';
 
 const ProgramSet: React.FC<{ program: Program }> = (props) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
-  const { programId, title, image, tags } = props.program;
+  const { programId, title, image } = props.program;
   
   const layoutId = `programbox-${programId}`;
 

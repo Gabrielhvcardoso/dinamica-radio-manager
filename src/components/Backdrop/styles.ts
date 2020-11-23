@@ -2,14 +2,9 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Container = styled(motion.div).attrs({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: {
-    type: 'spring',
-    stiffness: 260,
-    damping: 20
-  },
+  initial: { backgroundColor: 'transparent' },
+  animate: { backgroundColor: 'rgba(0, 0, 0, 0.6)' },
+  exit: { backgroundColor: 'transparent' },
 })`
   position: absolute;
   top: 0;
@@ -20,5 +15,4 @@ export const Container = styled(motion.div).attrs({
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 1 !important;
 `;
