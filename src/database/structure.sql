@@ -57,15 +57,15 @@ ALTER TABLE `tag` ADD FOREIGN KEY (`programId`) REFERENCES `program` (`programId
 
 ALTER TABLE `tag` ADD FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`);
 
-ALTER TABLE `program` ADD FOREIGN KEY (`programId`) REFERENCES `banner` (`targetProgram`);
+ALTER TABLE `banner` ADD FOREIGN KEY (`targetProgram`) REFERENCES `program` (`programId`);
 
-ALTER TABLE `category` ADD FOREIGN KEY (`categoryId`) REFERENCES `banner` (`targetCategory`);
+ALTER TABLE `banner` ADD FOREIGN KEY (`targetCategory`) REFERENCES `category` (`categoryId`);
 
-ALTER TABLE `client` ADD FOREIGN KEY (`clientId`) REFERENCES `program` (`clientId`);
+ALTER TABLE `program` ADD FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`);
 
-ALTER TABLE `client` ADD FOREIGN KEY (`clientId`) REFERENCES `category` (`clientId`);
+ALTER TABLE `category` ADD FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`);
 
-ALTER TABLE `client` ADD FOREIGN KEY (`clientId`) REFERENCES `banner` (`clientId`);
+ALTER TABLE `banner` ADD FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`);
 
 ALTER TABLE `scheduleProgram` ADD FOREIGN KEY (`programId`) REFERENCES `program` (`programId`);
 
