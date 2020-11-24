@@ -1,6 +1,6 @@
 import React, { createRef, useContext } from 'react';
 import { Container, TimeLine as TimeLineComponent } from './styles';
-import { useDimensions } from '../../../../hooks';
+import { useWindowSize } from '../../../../hooks';
 import TimeTableContext from '../../context';
 
 import Meassuring from './components/Meassuring';
@@ -9,15 +9,14 @@ import MotionFunction from './components/MotionFunction';
 const TimeLine: React.FC = () => {
   const { programs } = useContext(TimeTableContext);
 
-  const timelineRef = createRef<HTMLDivElement>();
-  const { width } = useDimensions(timelineRef);
-  const meassurementUnit = width / 24;
+  const { width } = useWindowSize();
+  const meassurementUnit = (width - 100) / 24;
 
-  // console.log(width);
+  console.log(meassurementUnit)
   
   return (
     <Container>
-      <TimeLineComponent ref={timelineRef}>
+      <TimeLineComponent>
         {
           programs.map((item) => (
             <MotionFunction
