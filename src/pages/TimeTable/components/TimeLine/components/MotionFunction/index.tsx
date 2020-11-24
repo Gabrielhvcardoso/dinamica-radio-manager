@@ -6,7 +6,7 @@ import Program from './Program';
 
 interface MotionFunctionProps {
   item: ScheduleProgram,
-  meassureUnit: number,
+  measureUnit: number,
 }
 
 const resolveDecimalTime = (time: number): string => {
@@ -15,7 +15,7 @@ const resolveDecimalTime = (time: number): string => {
   return `${(hours === 24 ? 0 : hours).toString().padStart(2, '0')}:${minutes.padStart(2, '0')}`;
 } 
 
-const MotionFunction: React.FC<MotionFunctionProps> = ({ item, meassureUnit }) => {
+const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) => {
   const { moveProgram } = useContext(TimeTableContext);
   const { accumulated, programId, order, title, duration } = item;
 
@@ -23,7 +23,7 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, meassureUnit }) =
     <Motion
       style={{
         x: spring(
-          accumulated * meassureUnit,
+          accumulated * measureUnit,
           { stiffness: 500, damping: 50 }
         )
       }}
@@ -35,11 +35,11 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, meassureUnit }) =
             startAt={resolveDecimalTime(accumulated)}
             endAt={resolveDecimalTime(accumulated + duration)}
             id={`program-${programId}`}
-            meassureUnit={meassureUnit}
+            measureUnit={measureUnit}
             moveProgram={moveProgram}
             order={order}
             style={{
-              width: duration * meassureUnit + 'px',
+              width: duration * measureUnit + 'px',
               transform: `translate3d(${x}px, 0px, 0)`,
             }}
             title={title}

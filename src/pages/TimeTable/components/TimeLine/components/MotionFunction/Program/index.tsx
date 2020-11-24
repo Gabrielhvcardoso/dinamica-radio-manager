@@ -72,7 +72,7 @@ interface TempProgramProps {
   endAt: string,
   id: string,
   isDragging: boolean,
-  meassureUnit: number,
+  measureUnit: number,
   moveProgram: (dragId: string, hoverId: string) => void,
   order: number,
   style?: {},
@@ -83,7 +83,7 @@ interface TempProgramProps {
 
 const handleResize = (
   e: SyntheticEvent<HTMLDivElement>,
-  meassureUnit: number,
+  measureUnit: number,
   setProgramDuration: (programId: number, duration: number) => void,
 ) => {
   e.stopPropagation();
@@ -92,7 +92,7 @@ const handleResize = (
   const { id } = (e.target as HTMLDivElement).parentNode as HTMLDivElement;
   
   const callFunction = (e: MouseEvent) => {
-    resize(e, id, meassureUnit, setProgramDuration);
+    resize(e, id, measureUnit, setProgramDuration);
   }
 
   window.addEventListener('mousemove', callFunction)
@@ -116,7 +116,7 @@ const resize = (e: MouseEvent, elementId: string, measureUnit: number, setProgra
 
 class TempProgram extends React.Component<TempProgramProps> {
   render () {
-    const { style, startAt, endAt, id, title, duration, meassureUnit, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { style, startAt, endAt, id, title, duration, measureUnit, isDragging, connectDragSource, connectDropTarget } = this.props;
 
     const opacity = isDragging ? 0 : 1;
     const zIndex = isDragging ? 2 : 1;
@@ -155,7 +155,7 @@ class TempProgram extends React.Component<TempProgramProps> {
             <span style={{ fontSize: 11 }}>{ `${startAt} - ${endAt}` }</span>
           </div>
           
-          <Draggable className="right-resizer" onMouseDown={(e) => handleResize(e, meassureUnit, this.context.setProgramDuration)} />
+          <Draggable className="right-resizer" onMouseDown={(e) => handleResize(e, measureUnit, this.context.setProgramDuration)} />
         </div>
       )
     )

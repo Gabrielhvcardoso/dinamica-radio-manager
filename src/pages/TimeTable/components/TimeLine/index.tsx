@@ -10,9 +10,9 @@ const TimeLine: React.FC = () => {
   const { programs } = useContext(TimeTableContext);
 
   const { width } = useWindowSize();
-  const meassurementUnit = (width - 100) / 24;
+  const measurementUnit = (width - 100) / 24;
 
-  console.log(meassurementUnit)
+  console.log(measurementUnit)
   
   return (
     <Container>
@@ -22,7 +22,7 @@ const TimeLine: React.FC = () => {
             <MotionFunction
               key={item.programId}
               item={item}
-              meassureUnit={meassurementUnit}
+              measureUnit={measurementUnit}
             /> 
           ))
         }
