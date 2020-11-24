@@ -1,4 +1,4 @@
-import React, { createRef, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Container, TimeLine as TimeLineComponent } from './styles';
 import { useWindowSize } from '../../../../hooks';
 import TimeTableContext from '../../context';
