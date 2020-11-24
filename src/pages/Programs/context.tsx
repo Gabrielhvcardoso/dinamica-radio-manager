@@ -6,9 +6,11 @@ import { Program } from '../../types/Program';
 
 interface ContextTypes {
   programs: Array<Program>,
+  setPrograms: (arg: Array<Program>) => void,
   filteredPrograms: Array<Program>,
-  selected: number | null,
-  setSelected: (arg: number | null) => void,
+
+  selected: Program | null,
+  setSelected: (arg: Program | null) => void,
 
   openCategory: boolean,
   setOpenCategory: (arg: boolean) => void,
@@ -23,15 +25,10 @@ interface ContextTypes {
 const ProgramsPageContext = createContext<ContextTypes>({} as ContextTypes);
 
 export const ProgramsPageContextProvider: React.FC = ({ children }) => {
-  const { programs } = useContext(ProgramsContext);
-  const [selected, setSelected] = useState<number | null>(null);
+  const { programs, setPrograms, categories, setCategories } = useContext(ProgramsContext);
+  const [selected, setSelected] = useState<Program | null>(null);
   const [openCategory, setOpenCategory] = useState<boolean>(false);
 
-  const [categories, setCategories] = useState<Array<Category>>([
-    { categoryId: 1, name: 'Categoria 1' },
-    { categoryId: 2, name: 'Categoria 2' },
-    { categoryId: 3, name: 'Categoria 3' },
-  ]);
   const [selectedCategories, setSelectedCategories] = useState<Array<number>>([]);
 
   const filteredPrograms = useMemo(() => {
@@ -47,6 +44,7 @@ export const ProgramsPageContextProvider: React.FC = ({ children }) => {
   return (
     <ProgramsPageContext.Provider value={{
       programs,
+      setPrograms,
       filteredPrograms,
 
       selected,

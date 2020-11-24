@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react';
 import { DragSource, DropTarget, ConnectDragSource, ConnectDropTarget } from 'react-dnd';
 import { Draggable } from './styles';
-import TimeTableContext, { ScheduleProgram } from '../../../../../context';
+import TimeTableContext from '../../../../../context';
 
 const ItemTypes = {
   CARD: 'card',

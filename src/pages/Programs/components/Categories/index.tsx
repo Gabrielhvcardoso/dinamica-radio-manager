@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Add, CategoryItem as CategoryItemContainer, Container } from './styles';
 
 import { Category } from '../../../../types/Category';
@@ -19,15 +19,19 @@ const CategoryItem: React.FC<{ item: Category }> = (props) => {
         $push: [props.item.categoryId],
       }));
     }
-
-    setIsSelected(!isSelected);
   }
+
+  useEffect(() => {
+    if (selectedCategories.some(categoryId => categoryId === props.item.categoryId)) {
+      setIsSelected(true);
+    } else {
+      setIsSelected(false);
+    }
+  }, [props.item.categoryId, selectedCategories]);
   
   return (
     <CategoryItemContainer isSelected={isSelected} onClick={handleClick}>
-      {
-        props.item.name
-      }
+      { props.item.name }
     </CategoryItemContainer>
   )
 }

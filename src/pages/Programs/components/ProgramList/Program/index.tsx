@@ -10,12 +10,12 @@ interface ProgramProps {
 }
 
 const Program: React.FC<ProgramProps> = ({ program }) => {
-  const { programId, image, title } = program;
+  const { image, title } = program;
   const { isMobile } = useContext(MobileContext);
   const { setSelected } = useContext(ProgramsPageContext);
   
   return (
-    <Container isMobile={isMobile} onClick={() => setSelected(programId)}>
+    <Container isMobile={isMobile} onClick={() => setSelected(program)}>
       <Overlay>
         <p>{ title }</p>
       </Overlay>

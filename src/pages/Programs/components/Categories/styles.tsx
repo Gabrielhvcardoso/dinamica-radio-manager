@@ -6,6 +6,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   margin: 0px -5px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  width: 100%;
 `;
 
 interface CategoryItemProps {
@@ -21,7 +24,9 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ children, isSelected
       onClick={onClick}
       textColor={isSelected ? "#ffffff" : "grey"}
     >
-      { children }
+      <span style={{ whiteSpace: 'nowrap' }}>
+        { children }
+      </span>
     </CategoryItemComponent>
   );
 }
@@ -31,15 +36,18 @@ interface CategoryItemComponentProps {
   textColor: string;
 }
 
-const CategoryItemComponent = styled.span<CategoryItemComponentProps>`
+const CategoryItemComponent = styled.div<CategoryItemComponentProps>`
   background-color: ${props => props.color};
   border-radius: 16px;
   color: ${props => props.textColor};
+  height: 20px;
   cursor: pointer;
+  flex: 0 1 auto;
   font-size: 14px;
   margin: 0px 5px;
   padding: 2px 10px;
   transition: .2s;
+
   -webkit-touch-callout: none;
     -webkit-user-select: none;
      -khtml-user-select: none;
@@ -57,8 +65,9 @@ export const Add = styled(motion.span)`
   color: white;
   cursor: pointer;
   height: 24px;
+  flex: 0 1 auto;
   line-height: 24px;
-  width: 24px;
+  min-width: 24px;
   margin: 0px 0px 0px 5px;
   text-align: center;
   transition: .2s;

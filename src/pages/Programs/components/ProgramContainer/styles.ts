@@ -7,7 +7,7 @@ export const ImageHeader = styled.img`
   width: 100%;
 `;
 
-export const ImageEdit = styled.div`
+export const ImageEdit = styled.label`
   background-color: #00000055;
   border-radius: 50%;
   cursor: pointer;
@@ -87,17 +87,20 @@ export const Title = styled.h1`
 
 export const CategoryList = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  margin-left: -5px;
 
-  & *:not(:first-child) {
+  & * {
     margin-left: 5px;
+    margin-bottom: 8px;
   }
 `;
 
 export const CategoryTag = styled.span`
   background-color: #171717;
-  border-radius: 10px;
+  border-radius: 16px;
   color: #707070;
-  cursor: default;
-  padding: 0px 10px;
+  cursor: pointer;
+  padding: 3px 10px;
   font-size: 14px;
 `;
