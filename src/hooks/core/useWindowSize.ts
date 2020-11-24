@@ -7,7 +7,10 @@ interface WindowSizeProps {
 }
 
 export function useWindowSize() {
-  const [windowSize, setWindowSize] = useState<WindowSizeProps>({} as WindowSizeProps);
+  const [windowSize, setWindowSize] = useState<WindowSizeProps>({
+    width: 0,
+    height: 0
+  });
 
   useEffect(() => {
     function handleResize() {
