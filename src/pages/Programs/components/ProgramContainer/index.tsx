@@ -56,7 +56,7 @@ const ProgramContainer: React.FC = () => {
 
                 <CategoryList>
                   { selected?.tags ? selected.tags.map((tag) => (
-                    <CategoryTag onClick={() => findOtherOfCategory(tag)}>{ findCategoryById(tag)?.name }</CategoryTag>
+                    <CategoryTag key={tag} onClick={() => findOtherOfCategory(tag)}>{ findCategoryById(tag)?.name }</CategoryTag>
                   )) : (
                     <CategoryTag>Nenhuma categoria</CategoryTag>
                   )}

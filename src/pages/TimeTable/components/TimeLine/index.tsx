@@ -1,12 +1,12 @@
 import React, { createRef, useContext } from 'react';
-import { Container, TimeLine } from './styles';
+import { Container, TimeLine as TimeLineComponent } from './styles';
 import { useDimensions } from '../../../../hooks';
 import TimeTableContext from '../../context';
 
 import Meassuring from './components/Meassuring';
 import MotionFunction from './components/MotionFunction';
 
-const TimeLineTemp: React.FC = () => {
+const TimeLine: React.FC = () => {
   const { programs } = useContext(TimeTableContext);
 
   const timelineRef = createRef<HTMLDivElement>();
@@ -17,20 +17,21 @@ const TimeLineTemp: React.FC = () => {
   
   return (
     <Container>
-      <TimeLine ref={timelineRef}>
+      <TimeLineComponent ref={timelineRef}>
         {
           programs.map((item) => (
             <MotionFunction
+              key={item.programId}
               item={item}
               meassureUnit={meassurementUnit}
             /> 
           ))
         }
-      </TimeLine>
+      </TimeLineComponent>
 
       <Meassuring />
     </Container>
   );
 }
 
-export default TimeLineTemp;
+export default TimeLine;

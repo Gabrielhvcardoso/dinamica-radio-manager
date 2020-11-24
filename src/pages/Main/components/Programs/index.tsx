@@ -15,7 +15,7 @@ const Programs: React.FC = () => {
       <ScrollView>
         {
           programs.map((program) => (
-            <ProgramSet program={program} />
+            <ProgramSet key={program.programId} program={program} />
           ))
         }
         <div style={{ minWidth: 50 }} />

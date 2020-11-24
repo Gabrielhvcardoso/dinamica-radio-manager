@@ -36,7 +36,7 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({ onDismiss }) => {
         <Menu onMouseDown={e => e.stopPropagation()}>
           {
             categories.map(({ categoryId, name }) => (
-              <MenuItem onClick={() => handleSelect(categoryId)}>{ name }</MenuItem>
+              <MenuItem key={categoryId} onClick={() => handleSelect(categoryId)}>{ name }</MenuItem>
             ))
           }
         </Menu>
