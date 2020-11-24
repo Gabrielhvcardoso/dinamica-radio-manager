@@ -3,6 +3,7 @@ import { AnimateSharedLayout, AnimatePresence } from 'framer-motion';
 import Backdrop from '../../../../../../components/Backdrop';
 import { Program } from '../../../../../../types/Program';
 import { Container, ProgramItem } from './styles';
+import { Portal } from 'react-portal';
 
 const ProgramSet: React.FC<{ program: Program }> = (props) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
@@ -20,9 +21,11 @@ const ProgramSet: React.FC<{ program: Program }> = (props) => {
       <AnimatePresence>
         {
           isSelected && (
-            <Backdrop onClick={onDismiss}>
-              <Container layoutId={layoutId} onClick={e => e.stopPropagation()} />
-            </Backdrop>
+            <Portal>
+              <Backdrop onClick={onDismiss}>
+                <Container layoutId={layoutId} onClick={e => e.stopPropagation()} />
+              </Backdrop>
+            </Portal>
           )
         }
       </AnimatePresence>
