@@ -16,4 +16,5 @@ export const Container = styled(motion.div)`
   border-radius: 10px;
   height: 500px;
   width: 660px;
+  max-width: 95%;
 `;

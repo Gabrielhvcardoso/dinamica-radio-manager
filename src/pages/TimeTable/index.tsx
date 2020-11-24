@@ -1,14 +1,32 @@
-import React from 'react';
-import { Container } from './styles';
+import React, { useContext } from 'react';
+import { CenteredContainer, Container, Text } from './styles';
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
 import Navigation from './components/Navigation';
 import ProgramSelector from './components/ProgramSelector';
 import TimeLine from './components/TimeLine';
 
+import MobileContext from '../../context/mobile';
 import { TimeTableContextProvider } from './context';
+import { Portal } from 'react-portal';
 
 const TimeTable: React.FC = () => {
+  const { isMobile } = useContext(MobileContext);
+
+  if (isMobile) {
+    return (
+      <Portal>
+        <AnimatePresence>
+          <CenteredContainer>
+            <Text>
+              Essa página não foi projetada para dispositivos móveis
+            </Text>
+          </CenteredContainer>
+        </AnimatePresence>
+      </Portal>
+    )
+  }
+
   return (
     <TimeTableContextProvider>
       <AnimatePresence>

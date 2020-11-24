@@ -36,6 +36,7 @@ export const Menu = styled(motion.div).attrs({
   overflow-y: auto;
   padding: 10px 0px;
   width: 400px;
+  max-width: 95%;
 `;
 
 export const MenuItem = styled.div`
