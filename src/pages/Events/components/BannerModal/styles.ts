@@ -144,7 +144,7 @@ export const Button = styled.button`
 
   &:hover {
     background-color: #8BC298;
-
+    color: black;
   }
 `;
 
