@@ -7,7 +7,7 @@ export interface Banner {
   program?: null | {
     programId: number,
     programTitle: string,
-    prigramImage: string
+    programImage: string
   },
   category?: null | {
     categoryId: number,

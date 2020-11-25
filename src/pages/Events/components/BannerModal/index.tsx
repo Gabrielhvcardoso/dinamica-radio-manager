@@ -5,7 +5,7 @@ import { Button, CloseButton, Container, Detail, Headline, Helper, ImageBackdrop
 import Select from 'react-select';
 import { selectStyles } from './selectStyles';
 
-import { formatDistanceToNow, addDays } from 'date-fns';
+import { formatDistanceToNow, addDays, format, addHours } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 import MobileContext from '../../../../context/mobile';
@@ -24,7 +24,7 @@ const BannerModal: React.FC = () => {
 
   const programs = [
     { value: 0, label: "Nenhum" },
-    ...contextPrograms.map(({ programId, title }) => ({ value: programId, label: title }))
+    ...contextPrograms.map(({ programId, title, image }) => ({ value: programId, label: title, image  }))
   ];
 
   const categories = [
@@ -57,7 +57,10 @@ const BannerModal: React.FC = () => {
                 {
                   event.expiresAt ? (
                     ' - expira em ' +
-                    formatDistanceToNow(addDays(event.createdAt, 2), { locale: ptBR })    
+                    formatDistanceToNow(addDays(event.expiresAt, 2), { locale: ptBR })
+                    +
+                    ' - (' +
+                    format(event.expiresAt, "iiii, dd 'de' MMMM 'de' yyyy 'às' HH:mm", { locale: ptBR }) + ')'
                   ) : <></>
                 }
               </Detail>
@@ -66,7 +69,15 @@ const BannerModal: React.FC = () => {
               <div style={{ display: 'flex', flexDirection: isMobile ? "column" : "row", justifyContent: 'space-between', alignItems: "flex-start", marginTop: 20, marginBottom: 20 }}>
                 <Section style={{ width: isMobile ? "100%" : 200 }}>
                   <Headline>Data de expiração</Headline>
-                  <TextInput type="date" placeholder="00/00/0000" />
+                  <TextInput
+                    defaultValue={event.expiresAt ? format(event.expiresAt, 'yyyy-MM-dd') : undefined}
+                    type="date"
+                    placeholder="00/00/0000"
+                    onChange={e => setEvent({
+                      ...event,
+                      expiresAt: addHours(e.target.valueAsNumber, 3).getTime()
+                    })}
+                  />
                   <Helper>Data para o anúncio parar de ser exibido. (opcional)</Helper>
                 </Section>
 
@@ -84,7 +95,15 @@ const BannerModal: React.FC = () => {
                   <Select
                     styles={selectStyles}
                     options={programs}
-                    defaultValue={programs[0]}
+                    defaultValue={event.program ? programs[programs.findIndex(({ value }) => value === event.program?.programId )] : programs[0]}
+                    onChange={(e: any) => setEvent({
+                      ...event,
+                      program: {
+                        programId: e.value,
+                        programTitle: e.label,
+                        programImage: e.image
+                      }
+                    })}
                     theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })}
                   />
                   <Helper>O programa selecionado e suas informações serão exibidos no anúncio. (opcional)</Helper>
@@ -92,14 +111,31 @@ const BannerModal: React.FC = () => {
 
                 <Section style={{ width: isMobile ? "100%" : 200 }}>
                   <Headline>Categoria alvo</Headline>
-                  <Select styles={selectStyles} options={categories} defaultValue={categories[0]} theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })} />
+                  <Select
+                    styles={selectStyles}
+                    options={categories}
+                    defaultValue={event.category ? categories[categories.findIndex(({ value }) => value === event.category?.categoryId )] : categories[0]}
+                    onChange={(e: any) => setEvent({
+                      ...event,
+                      category: {
+                        categoryId: e.value,
+                        categoryName: e.label
+                      }
+                    })}
+                    theme={theme => ({ ...theme, backgroundColor: '#202020', borderRadius: 0 })}
+                  />
                   <Helper>A categoria selecionada e seus programas serão exibidos no anúncio. (opcional)</Helper>
                 </Section>
               </div>
 
               <Section>
                 <Headline>Link de redirecionamento</Headline>
-                <TextInput type="url" placeholder="https://domain.com" />
+                <TextInput
+                  defaultValue={event.link ?? ''}
+                  type="url"
+                  placeholder="https://domain.com"
+                  onChange={(e) => setEvent({...event, link: e.target.value })}
+                />
                 <Helper>
                   (opcional) Ao clicar no anúncio o usuário será redirecionado para esse link.
                   Caso haja mais informações para exibir, um botão "acessar" será exibido na parte interior do anúncio.
@@ -108,7 +144,7 @@ const BannerModal: React.FC = () => {
 
               <Section style={{ marginTop: 40 }}>
                 <Headline>Descrição</Headline>
-                <Textarea>{ event.description }</Textarea>
+                <Textarea onChange={(e) => setEvent({...event, description: e.target.value })} autoCorrect="false">{ event.description }</Textarea>
                 <Helper>
                   (opcional) Será exibido na parte interna do anúncio.
                 </Helper>
