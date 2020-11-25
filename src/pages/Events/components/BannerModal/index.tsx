@@ -78,7 +78,7 @@ const BannerModal: React.FC = () => {
                       expiresAt: addHours(e.target.valueAsNumber, 3).getTime()
                     })}
                   />
-                  <Helper>Data para o anúncio parar de ser exibido. (opcional)</Helper>
+                  <Helper>Data para o anúncio deixar de ser exibido. (opcional)</Helper>
                 </Section>
 
                 <Section style={{ width: isMobile ? "100%" : 200 }}>
