@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import ProgramsContext from '../../context/programs';
+import ProgramsContext from '../../context/data';
 
 import { Category } from '../../types/Category';
 import { Program } from '../../types/Program';

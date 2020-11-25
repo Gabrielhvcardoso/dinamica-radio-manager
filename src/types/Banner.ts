@@ -4,8 +4,15 @@ export interface Banner {
   description?: string,
   image?: string,
   link?: string,
-  targetProgram?: number,
-  targetCategory?: number,
+  program?: null | {
+    programId: number,
+    programTitle: string,
+    prigramImage: string
+  },
+  category?: null | {
+    categoryId: number,
+    categoryName: string
+  },
 
   createdAt: number,
   expiresAt?: number

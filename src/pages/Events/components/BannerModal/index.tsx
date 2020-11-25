@@ -9,7 +9,7 @@ import { formatDistanceToNow, addDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 import MobileContext from '../../../../context/mobile';
-import ProgramsContext from '../../../../context/programs';
+import ProgramsContext from '../../../../context/data';
 import EventsContext from '../../context';
 
 import { mdiClose } from '@mdi/js';

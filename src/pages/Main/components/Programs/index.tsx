@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { Container, ScrollView } from './styles';
 import Title from '../../../../components/Title';
 
-import ProgramContext from '../../../../context/programs';
+import DataContext from '../../../../context/data';
 import ProgramSet from './components/ProgramSet';
 
 const Programs: React.FC = () => {
-  const { programs } = useContext(ProgramContext);
+  const { programs } = useContext(DataContext);
 
   return (
     <Container id="programs">

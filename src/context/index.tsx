@@ -1,13 +1,13 @@
 import React from 'react';
-import { ProgramContextProvider } from './programs';
+import { DataContextProvider } from './data';
 import { MobileContextProvider } from './mobile';
 
 const Context: React.FC = ({ children }) => {
   return (
     <MobileContextProvider>
-      <ProgramContextProvider>
+      <DataContextProvider>
         { children }
-      </ProgramContextProvider>
+      </DataContextProvider>
     </MobileContextProvider>
   );
 }
