@@ -15,7 +15,7 @@ function App () {
   const isMobile = useMemo(() => width < 768, [width]);
 
   return (
-    <div style={{ display: 'flex', flex: 1 }} className={`app ${isMobile ? 'mobile' : 'desktop'}`}>
+    <div style={{ display: 'flex', flex: 1, flexDirection: 'column' }} className={`app ${isMobile ? 'mobile' : 'desktop'}`}>
       <DndProvider backend={HTML5Backend} >
         <Router history={history}>
           <Context>

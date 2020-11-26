@@ -20,8 +20,12 @@ import AuthContext from './context/auth';
 import MobileContext from './context/mobile';
 
 const Routes: React.FC = () => {
-  const { clientId } = useContext(AuthContext);
+  const { isLoading, clientId } = useContext(AuthContext);
   const { isMobile } = useContext(MobileContext);
+
+  if (isLoading) {
+    return <div></div>;
+  }
 
   return (
     <BrowserRouter>
