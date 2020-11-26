@@ -31,13 +31,13 @@ const Toolbar: React.FC<RouteComponentProps> = ({ location }) => {
         <NavLink key={to} to={to}>
           <Icon path={icon}
             size={1.5}
-            color={location.pathname === to ? '#8bc298' : 'white'}
+            color={optionsActive ? 'white' : location.pathname === to ? '#8bc298' : 'white'}
           />
         </NavLink>
       ))}
 
       <div style={{ display: 'flex', alignItems: 'center' }} onClick={() => setOptionsActive(true)}>
-        <Icon path={mdiMenu} size={1.5} color={'white'} />
+        <Icon path={mdiMenu} size={1.5} color={optionsActive ? '#8bc298' : 'white'} />
       </div>
 
       <AnimatePresence>
