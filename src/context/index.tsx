@@ -1,14 +1,17 @@
 import React from 'react';
+import { AuthContextProvider } from './auth';
 import { DataContextProvider } from './data';
 import { MobileContextProvider } from './mobile';
 
 const Context: React.FC = ({ children }) => {
   return (
-    <MobileContextProvider>
-      <DataContextProvider>
-        { children }
-      </DataContextProvider>
-    </MobileContextProvider>
+    <AuthContextProvider>
+      <MobileContextProvider>
+        <DataContextProvider>
+          { children }
+        </DataContextProvider>
+      </MobileContextProvider>
+    </AuthContextProvider>
   );
 };
 
