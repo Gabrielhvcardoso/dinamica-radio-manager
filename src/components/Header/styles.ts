@@ -41,7 +41,7 @@ export const NavLink = styled(Link)<NavLinkProps>`
   }
 `;
 
-export const NavLinkWithoutRedirect = styled.span`
+export const NavLinkWithoutRedirect = styled.a`
   border-bottom: 2px solid transparent;
   color: white;
   cursor: pointer;

@@ -15,6 +15,7 @@ interface InputProps {
 const Login: React.FC = () => {
   const { setAuthStatus } = useContext(AuthContext);
 
+  const [persistence, setPersistence] = useState<boolean>(false);
   const [form, setForm] = useState<{ email: string, password: string }>({ email: '', password: '' });
   const [errors, setErrors] = useState<{ email: boolean, password: boolean }>({ email: false, password: false });
   const [isError, setIsError] = useState<boolean>(false);
@@ -44,7 +45,7 @@ const Login: React.FC = () => {
       }, (response) => {
         if (response.code === 'success') {
           const { clientId } = response;
-          setAuthStatus(clientId);
+          setAuthStatus(clientId, persistence);
         } else {
           showError();
         }
@@ -109,11 +110,11 @@ const Login: React.FC = () => {
           }
 
           <div style={{ alignItems: 'center', display: 'flex', margin: '10px 0px' }}>
-            <Checkbox id="persistence" />
+            <Checkbox checked={persistence} onChange={e => setPersistence(e.target.checked)} id="persistence" />
             <label htmlFor="persistence">Matenha-me conectado</label>
           </div>
 
-          <Button onClick={handleLogin}>Enviar</Button>
+          <Button onClick={handleLogin}>Entrar</Button>
         </div>
       </div>
     </Container>

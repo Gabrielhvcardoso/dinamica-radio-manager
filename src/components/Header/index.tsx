@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Container, Logo, LinkUnderline, Nav, NavLink, NavLinkWithoutRedirect } from './styles';
+
+import AuthContext from '../../context/auth';
 
 import './shake.css';
 
@@ -14,6 +16,7 @@ const resolvePathname = (path: string) => {
 };
 
 const Header: React.FC<RouteComponentProps> = ({ location }) => {
+  const { setAuthStatus } = useContext(AuthContext);
   const [shake, setShake] = useState<boolean>(false);
 
   const underlinePosition = useMemo<number>(() => {
@@ -46,7 +49,7 @@ const Header: React.FC<RouteComponentProps> = ({ location }) => {
         </Nav>
 
         <Nav style={{ flex: 0 }}>
-          <NavLinkWithoutRedirect>Sair</NavLinkWithoutRedirect>
+          <NavLinkWithoutRedirect onClick={() => setAuthStatus(null)}>Sair</NavLinkWithoutRedirect>
         </Nav>
       </Nav>
     </Container>

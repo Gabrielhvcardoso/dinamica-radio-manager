@@ -7,6 +7,10 @@ export const Container = styled.div`
   flex: 1;
   padding: 100px;
   position: relative;
+
+  @media (max-width: 600px) {
+    padding: 20px;
+  }
 `;
 
 export const BackImage = styled.img`
@@ -34,6 +38,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 4px;
   color: black;
+  cursor: pointer;
   font-size: 14px;
   height: 40px;
   margin-top: 10px;
