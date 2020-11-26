@@ -19,6 +19,7 @@ export const Nav = styled.nav`
   display: flex;
   flex: 1;
   justify-content: flex-end;
+  transition: .2s;
 `;
 
 interface NavLinkProps extends LinkProps {
@@ -28,6 +29,22 @@ interface NavLinkProps extends LinkProps {
 export const NavLink = styled(Link)<NavLinkProps>`
   border-bottom: 2px solid transparent;
   color: white;
+  padding-bottom: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: .2s;
+  width: 120px;
+
+  &:hover {
+    /* border-bottom: 2px solid #8BC298; */
+    color: #8BC298;
+  }
+`;
+
+export const NavLinkWithoutRedirect = styled.span`
+  border-bottom: 2px solid transparent;
+  color: white;
+  cursor: pointer;
   padding-bottom: 8px;
   text-align: center;
   text-decoration: none;

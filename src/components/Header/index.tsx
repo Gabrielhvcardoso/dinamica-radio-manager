@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Container, Logo, LinkUnderline, Nav, NavLink } from './styles';
+import { Container, Logo, LinkUnderline, Nav, NavLink, NavLinkWithoutRedirect } from './styles';
 
 import './shake.css';
 
@@ -31,19 +31,24 @@ const Header: React.FC<RouteComponentProps> = ({ location }) => {
   return (
     <Container>
       <Logo />
-
       <Nav>
-        <LinkUnderline
-          className={`${resolvePathname(location.pathname)} ${shake ? "shake-animation" : ""}`}
-          onAnimationEnd={() => setShake(false)}
-          onClick={() => setShake(true)}
-          position={-(underlinePosition ?? 360)}
-        />
+        <Nav>
+          <LinkUnderline
+            className={`${resolvePathname(location.pathname)} ${shake ? "shake-animation" : ""}`}
+            onAnimationEnd={() => setShake(false)}
+            onClick={() => setShake(true)}
+            position={-(underlinePosition ?? 360)}
+          />
 
-        <NavLink to="/">Principal</NavLink>
-        <NavLink to="/timetable">Programação</NavLink>
-        <NavLink to="/events">Eventos</NavLink>
-        <NavLink to="/programs">Programas</NavLink>
+          <NavLink to="/">Principal</NavLink>
+          <NavLink to="/timetable">Programação</NavLink>
+          <NavLink to="/events">Eventos</NavLink>
+          <NavLink to="/programs">Programas</NavLink>
+        </Nav>
+          
+        <Nav style={{ flex: 0 }}>
+          <NavLinkWithoutRedirect>Sair</NavLinkWithoutRedirect>
+        </Nav>
       </Nav>
     </Container>
   );
