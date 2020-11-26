@@ -27,5 +27,5 @@ export const Container = styled(motion.div).attrs({
   ${props => props.isMobile ? "left: 20px;" : ""}
   
   right: 20px;
-  z-index: 10;
+  z-index: 30;
 `;

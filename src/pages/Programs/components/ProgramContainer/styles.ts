@@ -75,7 +75,11 @@ export const ImageOverlay = styled.div`
   width: 100%;
 `;
 
-export const Title = styled.h1`
+export const Title = styled(motion.h1).attrs({
+  initial: { translateX: -100, opacity: 0 },
+  animate: { translateX: 0, opacity: 1 },
+  exit: { translateX: -100, opacity: 0 },
+})`
   box-sizing: border-box;
   font-size: 32px;
   font-weight: 700;
@@ -96,11 +100,41 @@ export const CategoryList = styled.div`
   }
 `;
 
-export const CategoryTag = styled.span`
+export const CategoryTag = styled.div`
+  align-self: flex-start;
   background-color: #171717;
   border-radius: 16px;
   color: #707070;
   cursor: pointer;
   padding: 3px 10px;
   font-size: 14px;
+
+  & + div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 20px;
+    margin-left: -20px;
+    transition: .2s;
+    visibility: hidden;
+    opacity: 0;
+
+    &:hover {
+      margin-left: 0px;
+      visibility: visible;
+      opacity: 1;
+      padding-left: 10px;
+    }
+
+    & *:hover {
+      filter: brightness(51%);
+    }
+  }
+
+  &:hover + div {
+    margin-left: 0px;
+    visibility: visible;
+    opacity: 1;
+    padding-left: 10px;
+  }
 `;

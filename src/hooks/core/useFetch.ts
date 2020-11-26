@@ -31,6 +31,24 @@ export const useFetch = {
     });
   },
 
+  put: async (url = '/', body: {}, onEnd = (data: any) => {}) => {
+    fetch(BASE_URL + url + '/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body),
+    }).then((response) => {
+      response.json()
+        .then(data => {
+          onEnd(data);
+        })
+        .catch(() => {
+          onEnd({ code: 'error' })
+        });
+    });
+  },
+
   postFormData: async (url = '/', body: FormData, onEnd = (data: any) => {}) => {
     fetch(BASE_URL + url, {
       method: 'POST',
