@@ -4,7 +4,7 @@ export const useFetch = {
   get: (url = '/', onEnd = (data: {}) => {}) => {
     Promise.all([
       fetch(BASE_URL + url, {
-        method: 'GET',
+        method: 'GET'
       })
     ]).then(([response]) => {
       response.json().then((data) => {
@@ -19,14 +19,14 @@ export const useFetch = {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(body)
     }).then((response) => {
       response.json()
         .then(data => {
           onEnd(data);
         })
         .catch(() => {
-          onEnd({ code: 'error' })
+          onEnd({ code: 'error' });
         });
     });
   },
@@ -37,14 +37,14 @@ export const useFetch = {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(body)
     }).then((response) => {
       response.json()
         .then(data => {
           onEnd(data);
         })
         .catch(() => {
-          onEnd({ code: 'error' })
+          onEnd({ code: 'error' });
         });
     });
   },
@@ -52,30 +52,30 @@ export const useFetch = {
   postFormData: async (url = '/', body: FormData, onEnd = (data: any) => {}) => {
     fetch(BASE_URL + url, {
       method: 'POST',
-      body,
+      body
     }).then((response) => {
       response.json()
         .then(data => {
           onEnd(data);
         })
         .catch(() => {
-          onEnd({ code: 'error', message: 'Erro genérico' })
+          onEnd({ code: 'error', message: 'Erro genérico' });
         });
     });
   },
 
   delete: async (url = '/', onEnd = (data: any) => {}) => {
     fetch(BASE_URL + url, {
-      method: 'DELETE',
+      method: 'DELETE'
     }).then((response) => {
       response.json()
         .then(data => {
           onEnd(data);
         })
         .catch((e) => {
-          onEnd({ code: 'error', ...e })
+          onEnd({ code: 'error', ...e });
         });
     });
-  },
+  }
 
 };

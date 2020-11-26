@@ -53,7 +53,7 @@ interface DotProps {
 }
 
 export const Dot = styled.div<DotProps>`
-  background-color: ${props => props.selected ? "#8BC298" : "transparent"};
+  background-color: ${props => props.selected ? '#8BC298' : 'transparent'};
   border: 1px solid #8BC298;
   border-radius: 10px;
   height: 10px;

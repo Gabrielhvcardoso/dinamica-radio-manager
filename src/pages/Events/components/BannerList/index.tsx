@@ -24,6 +24,6 @@ const BannerList: React.FC<{ className: string }> = ({ className }) => {
       </Row>
     </Container>
   );
-}
+};
 
 export default BannerList;

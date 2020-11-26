@@ -24,6 +24,6 @@ const Schedule: React.FC = () => {
       </ProgramList>
     </Container>
   );
-}
+};
 
 export default Schedule;

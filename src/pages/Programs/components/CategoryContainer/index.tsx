@@ -15,20 +15,20 @@ const CategoryContainer: React.FC = () => {
   const showAlert = (message: string, error: boolean = false) => {
     setModalMessage(message);
     setTimeout(() => setModalMessage(null), 5000);
-  }
+  };
 
-  const [categoryTitle, setCategoryTitle] = useState<string>("");
+  const [categoryTitle, setCategoryTitle] = useState<string>('');
 
   const handleSave = () => {
-    let errors = [
-      { status: categoryTitle.length < 3, message: "Título muito curto, digite pelo menos 3 caracteres." },
-      { status: categoryTitle.length > 40, message: "Título muito longo, o título deve ter no máximo 40 caracteres." },
-      { status: categories.some(item => item.name === categoryTitle), message: "Já existe uma categoria com esse nome" },
+    const errors = [
+      { status: categoryTitle.length < 3, message: 'Título muito curto, digite pelo menos 3 caracteres.' },
+      { status: categoryTitle.length > 40, message: 'Título muito longo, o título deve ter no máximo 40 caracteres.' },
+      { status: categories.some(item => item.name === categoryTitle), message: 'Já existe uma categoria com esse nome' }
     ];
 
-    const isError = errors.find(item => item.status); 
+    const isError = errors.find(item => item.status);
     if (isError) return showAlert(isError.message);
-  
+
     setCategories(update(categories, {
       $push: [{
         categoryId: categories[categories.length - 1].categoryId + 1,
@@ -37,7 +37,7 @@ const CategoryContainer: React.FC = () => {
     }));
 
     onDismiss();
-  }
+  };
 
   return (
     <AnimatePresence>
@@ -76,6 +76,6 @@ const CategoryContainer: React.FC = () => {
       }
     </AnimatePresence>
   );
-}
+};
 
 export default CategoryContainer;

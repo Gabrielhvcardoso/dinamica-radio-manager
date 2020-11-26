@@ -4,7 +4,7 @@ export const selectStyles: StylesConfig = {
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isSelected ? '#8bc298' : 'transparent',
-    color: state.isSelected ? 'white' : 'grey',
+    color: state.isSelected ? 'white' : 'grey'
   }),
   menu: (styles) => ({
     ...styles,
@@ -17,11 +17,11 @@ export const selectStyles: StylesConfig = {
     borderRadius: 4,
     marginTop: 5,
     marginBottom: 10,
-    outline: 'none',
+    outline: 'none'
   }),
   singleValue: (provided, state) => ({
     ...provided,
     opacity: state.isDisabled ? 0.5 : 1,
     transition: 'opacity 300ms'
-  }),
-}
+  })
+};

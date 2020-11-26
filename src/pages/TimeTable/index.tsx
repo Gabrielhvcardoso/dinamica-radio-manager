@@ -24,7 +24,7 @@ const TimeTable: React.FC = () => {
           </CenteredContainer>
         </AnimatePresence>
       </Portal>
-    )
+    );
   }
 
   return (
@@ -40,6 +40,6 @@ const TimeTable: React.FC = () => {
       </AnimatePresence>
     </TimeTableContextProvider>
   );
-}
+};
 
 export default TimeTable;

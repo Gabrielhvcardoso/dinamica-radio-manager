@@ -9,6 +9,6 @@ const Backdrop: React.FC<BackdropProps> = (props) => {
   return (
     <Container {...props} />
   );
-}
+};
 
 export default Backdrop;

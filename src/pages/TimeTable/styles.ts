@@ -29,7 +29,6 @@ export const CenteredContainer = styled(motion.div).attrs({
   top: 0px;
 `;
 
-
 export const Text = styled.span`
   max-width: 80%;
   text-align: center;

@@ -22,6 +22,6 @@ const Main: React.FC = () => {
       </Container>
     </AnimatePresence>
   );
-}
+};
 
 export default Main;

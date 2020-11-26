@@ -18,13 +18,13 @@ export const Container = styled(motion.div).attrs({
 })<ContainerProps>`
   background-color: #303030;
   border-radius: 10px;
-  bottom: ${props => props.isMobile ? "90px" : "20px"};
-  color: ${props => props.error ? "red" : "white"};
+  bottom: ${props => props.isMobile ? '90px' : '20px'};
+  color: ${props => props.error ? 'red' : 'white'};
   min-width: 10px;
-  max-width: ${props => props.isMobile ? "95%" : "400px"};
+  max-width: ${props => props.isMobile ? '95%' : '400px'};
   padding: 10px;
   position: fixed;
-  ${props => props.isMobile ? "left: 20px;" : ""}
+  ${props => props.isMobile ? 'left: 20px;' : ''}
   
   right: 20px;
   z-index: 30;

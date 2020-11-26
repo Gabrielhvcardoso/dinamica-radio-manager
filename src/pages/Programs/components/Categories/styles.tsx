@@ -20,16 +20,16 @@ interface CategoryItemProps {
 export const CategoryItem: React.FC<CategoryItemProps> = ({ children, isSelected, onClick }) => {
   return (
     <CategoryItemComponent
-      color={"#303030"}
+      color={'#303030'}
       onClick={onClick}
-      textColor={isSelected ? "#ffffff" : "grey"}
+      textColor={isSelected ? '#ffffff' : 'grey'}
     >
       <span style={{ whiteSpace: 'nowrap' }}>
         { children }
       </span>
     </CategoryItemComponent>
   );
-}
+};
 
 interface CategoryItemComponentProps {
   color: string;

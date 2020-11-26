@@ -23,6 +23,6 @@ export const EventsContextProvider: React.FC = ({ children }) => {
       { children }
     </EventsContext.Provider>
   );
-}
+};
 
 export default EventsContext;

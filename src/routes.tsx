@@ -20,13 +20,11 @@ const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       {
-        isMobile ? (
-          <Toolbar />
-        ) : (
-          <Header />
-        )
+        isMobile
+          ? <Toolbar />
+          : <Header />
       }
-  
+
       <Switch>
         <Route path="/" exact component={Main} />
         <Route path="/events" component={Events} />
@@ -35,6 +33,6 @@ const Routes: React.FC = () => {
       </Switch>
     </BrowserRouter>
   );
-}
+};
 
 export default Routes;

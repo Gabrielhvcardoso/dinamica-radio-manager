@@ -6,16 +6,16 @@ import TimeTableContext from '../../context';
 
 const Navigation: React.FC = () => {
   const { filter, setFilter, setIsSelectorActive } = useContext(TimeTableContext);
-  
+
   const filterList = [
-    { id: 0, name: "Domingo", abrev: "D" },
-    { id: 1, name: "Segunda-feira", abrev: "S" },
-    { id: 2, name: "Terça-feira", abrev: "T" },
-    { id: 3, name: "Quarta-feira", abrev: "Q" },
-    { id: 4, name: "Quinta-feira", abrev: "Q" },
-    { id: 5, name: "Sexta-feira", abrev: "S" },
-    { id: 6, name: "Sábado", abrev: "S" },
-  ]
+    { id: 0, name: 'Domingo', abrev: 'D' },
+    { id: 1, name: 'Segunda-feira', abrev: 'S' },
+    { id: 2, name: 'Terça-feira', abrev: 'T' },
+    { id: 3, name: 'Quarta-feira', abrev: 'Q' },
+    { id: 4, name: 'Quinta-feira', abrev: 'Q' },
+    { id: 5, name: 'Sexta-feira', abrev: 'S' },
+    { id: 6, name: 'Sábado', abrev: 'S' }
+  ];
 
   return (
     <Container>
@@ -42,6 +42,6 @@ const Navigation: React.FC = () => {
       </SelectorsContainer>
     </Container>
   );
-}
+};
 
 export default Navigation;

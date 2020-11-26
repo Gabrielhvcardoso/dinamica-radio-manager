@@ -8,12 +8,12 @@ import { Portal } from 'react-portal';
 const ProgramSet: React.FC<{ program: Program }> = (props) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const { programId, title, image } = props.program;
-  
+
   const layoutId = `programbox-${programId}`;
 
   const onDismiss = () => {
     setIsSelected(false);
-  }
+  };
 
   return (
     <AnimateSharedLayout>
@@ -33,6 +33,6 @@ const ProgramSet: React.FC<{ program: Program }> = (props) => {
       </AnimatePresence>
     </AnimateSharedLayout>
   );
-}
+};
 
 export default ProgramSet;

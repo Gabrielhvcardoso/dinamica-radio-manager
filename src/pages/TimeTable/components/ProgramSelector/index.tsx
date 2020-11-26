@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 
 const ProgramSelector: React.FC = () => {
   const { isSelectorActive, setIsSelectorActive } = useContext(TimeTableContext);
-  
+
   const onDismiss = () => setIsSelectorActive(false);
 
   return (
@@ -20,27 +20,27 @@ const ProgramSelector: React.FC = () => {
               </Header>
 
               <ListView>
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
-                <Program /> 
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
+                <Program />
               </ListView>
             </Container>
           </Overlay>
         )
       }
-      
+
     </AnimatePresence>
   );
-}
+};
 
 export default ProgramSelector;

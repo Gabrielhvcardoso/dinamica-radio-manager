@@ -4,7 +4,7 @@ import { Draggable } from './styles';
 import TimeTableContext from '../../../../../context';
 
 const ItemTypes = {
-  CARD: 'card',
+  CARD: 'card'
 };
 
 interface Props {
@@ -15,12 +15,12 @@ interface Props {
 }
 
 const programSource = {
-  beginDrag(props: { id: string, order: number }) {
+  beginDrag (props: { id: string, order: number }) {
     return {
       id: props.id,
       order: props.order
     };
-  },
+  }
 };
 
 const programTarget = {
@@ -33,8 +33,8 @@ const programTarget = {
     if (dragId === hoverId) {
       return;
     }
-  
-    const decoratedComponentInstance= document.getElementById(component.props.id);
+
+    const decoratedComponentInstance = document.getElementById(component.props.id);
 
     if (decoratedComponentInstance) {
       const hoverBoundingRect = decoratedComponentInstance.getBoundingClientRect();
@@ -49,19 +49,19 @@ const programTarget = {
       if (dragOrder > hoverOrder && hoverClientX > hoverMiddleX) {
         return;
       }
-    
+
       props.moveProgram(dragId, hoverId);
     }
   }
-}
+};
 
 const dropTargetHOC = DropTarget(ItemTypes.CARD, programTarget, connect => ({
-  connectDropTarget: connect.dropTarget(),
+  connectDropTarget: connect.dropTarget()
 }));
 
 const dragSourceHOC = DragSource(ItemTypes.CARD, programSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
+  isDragging: monitor.isDragging()
 }));
 
 interface TempProgramProps {
@@ -84,35 +84,33 @@ interface TempProgramProps {
 const handleResize = (
   e: SyntheticEvent<HTMLDivElement>,
   measureUnit: number,
-  setProgramDuration: (programId: number, duration: number) => void,
+  setProgramDuration: (programId: number, duration: number) => void
 ) => {
   e.stopPropagation();
   e.preventDefault();
 
   const { id } = (e.target as HTMLDivElement).parentNode as HTMLDivElement;
-  
+
   const callFunction = (e: MouseEvent) => {
     resize(e, id, measureUnit, setProgramDuration);
-  }
+  };
 
-  window.addEventListener('mousemove', callFunction)
+  window.addEventListener('mousemove', callFunction);
   window.addEventListener('mouseup', () => {
     window.removeEventListener('mousemove', callFunction);
   });
-}
+};
 
 const resize = (e: MouseEvent, elementId: string, measureUnit: number, setProgramDuration: (programId: number, duration: number) => void) => {
   const element = document.getElementById(elementId);
 
   if (element) {
     const elementWidth = e.pageX - element.getBoundingClientRect().left;
-    const durationInHours = Math.round((elementWidth * 60) / measureUnit / 5) * 5 / 60
-    const programId = parseInt(elementId.split("-")[1]);
+    const durationInHours = Math.round((elementWidth * 60) / measureUnit / 5) * 5 / 60;
+    const programId = parseInt(elementId.split('-')[1]);
     setProgramDuration(programId, durationInHours);
   }
-}
-
-
+};
 
 class TempProgram extends React.Component<TempProgramProps> {
   render () {
@@ -139,7 +137,7 @@ class TempProgram extends React.Component<TempProgramProps> {
             height: 100,
             justifyContent: 'space-between',
             padding: 10,
-            position: 'absolute',
+            position: 'absolute'
           }}
         >
           <span style={{
@@ -154,11 +152,11 @@ class TempProgram extends React.Component<TempProgramProps> {
             <span>{ title }</span>
             <span style={{ fontSize: 11 }}>{ `${startAt} - ${endAt}` }</span>
           </div>
-          
+
           <Draggable className="right-resizer" onMouseDown={(e) => handleResize(e, measureUnit, this.context.setProgramDuration)} />
         </div>
-      )
     )
+    );
   }
 }
 

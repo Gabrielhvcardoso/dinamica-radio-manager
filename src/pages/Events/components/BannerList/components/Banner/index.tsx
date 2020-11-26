@@ -13,12 +13,14 @@ interface BannerProps {
 
 const Banner: React.FC<BannerProps> = ({ create, banner }) => {
   const { setSelected } = useContext(EventsContext);
-  
-  if (create && !banner) return (
+
+  if (create && !banner) {
+    return (
     <Container color={colors[Math.floor(Math.random() * 2)].hex()}>
       <Title>Criar</Title>
     </Container>
-  );
+    );
+  }
 
   if (!banner) return <></>;
 
@@ -31,17 +33,17 @@ const Banner: React.FC<BannerProps> = ({ create, banner }) => {
       color="#303030"
     >
       {
-        banner.image ? (
-          <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={banner.image} alt={banner.title} />
-        ) : (
-          <div style={{ color: 'white', padding: 20 }}>
-            <Title>{ banner.title }</Title>
-            <br /><br /><span>{ format(banner.createdAt, "dd/MM/yy") }</span>
-          </div>
-        )
+        banner.image
+          ? <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={banner.image} alt={banner.title} />
+          : (
+              <div style={{ color: 'white', padding: 20 }}>
+                <Title>{ banner.title }</Title>
+                <br /><br /><span>{ format(banner.createdAt, 'dd/MM/yy') }</span>
+              </div>
+            )
       }
     </Container>
   );
-}
+};
 
 export default Banner;

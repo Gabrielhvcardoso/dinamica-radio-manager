@@ -30,7 +30,7 @@ export const Container = styled(motion.div)<ContainerProps>`
   position: relative;
   transition: .2s;
   width: 150px;
-  ${props => props.isMobile ? "flex: 1 0 auto;" : ""}
+  ${props => props.isMobile ? 'flex: 1 0 auto;' : ''}
 
   &:hover {
     transform: scale(1.1);

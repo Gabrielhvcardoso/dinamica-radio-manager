@@ -16,6 +16,6 @@ const ProgramList: React.FC = () => {
       }
     </List>
   );
-}
+};
 
 export default ProgramList;

@@ -20,8 +20,8 @@ const ListItem: React.FC<ListItemProps> = ({ first }) => {
           <Details>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae...</Details>
         </DetailsContainer>
       </BottomContainer>
-    </Container> 
+    </Container>
   );
-}
+};
 
 export default ListItem;

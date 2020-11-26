@@ -19,38 +19,37 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({ onDismiss }) => {
   const showError = () => {
     setIsError(true);
     setTimeout(() => setIsError(false), 5000);
-  }
+  };
 
   const handleSelect = (categoryId: number) => {
     useFetch.put('/tag', {
       programId: selected?.programId,
       categoryId
     }, (response) => {
-      if (response.code === "success") {
+      if (response.code === 'success') {
         handleInsert(categoryId);
       } else {
         showError();
       }
-    })
-  }
-  
-  const handleInsert = (id: number ) => {
+    });
+  };
+
+  const handleInsert = (id: number) => {
     if (!selected) return;
-    
+
     const index = programs.findIndex(({ programId }) => programId === selected?.programId);
-    
+
     const program = update(selected, {
       tags: { $push: [id] }
     });
 
-
     setSelected(program);
     setPrograms(update(programs, {
-      [index]: { $set: program },
+      [index]: { $set: program }
     }));
 
     onDismiss();
-  }
+  };
 
   return (
     <Portal>
@@ -71,6 +70,6 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({ onDismiss }) => {
       </Backdrop>
     </Portal>
   );
-}
+};
 
 export default CategoryPicker;

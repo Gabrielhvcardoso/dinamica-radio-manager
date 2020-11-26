@@ -12,14 +12,14 @@ const CategoryItem: React.FC<{ item: Category }> = (props) => {
 
   const handleClick = () => {
     if (isSelected) {
-      let newSelectedCategories = selectedCategories.filter((categoryId) => categoryId !== props.item.categoryId);
+      const newSelectedCategories = selectedCategories.filter((categoryId) => categoryId !== props.item.categoryId);
       setSelectedCategories(newSelectedCategories);
     } else {
       setSelectedCategories(update(selectedCategories, {
-        $push: [props.item.categoryId],
+        $push: [props.item.categoryId]
       }));
     }
-  }
+  };
 
   useEffect(() => {
     if (selectedCategories.some(categoryId => categoryId === props.item.categoryId)) {
@@ -28,17 +28,16 @@ const CategoryItem: React.FC<{ item: Category }> = (props) => {
       setIsSelected(false);
     }
   }, [props.item.categoryId, selectedCategories]);
-  
+
   return (
     <CategoryItemContainer isSelected={isSelected} onClick={handleClick}>
       { props.item.name }
     </CategoryItemContainer>
-  )
-}
+  );
+};
 
 const Categories: React.FC = () => {
   const { setOpenCategory, categories } = useContext(ProgramsPageContext);
-  
 
   return (
     <Container>
@@ -51,6 +50,6 @@ const Categories: React.FC = () => {
       <Add onClick={() => setOpenCategory(true)}>+</Add>
     </Container>
   );
-}
+};
 
 export default Categories;

@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, RefObject } from 'react';
 
-export function useDimensions(targetRef: RefObject<HTMLElement>) {
+export function useDimensions (targetRef: RefObject<HTMLElement>) {
   const getDimensions = () => {
     return {
       width: targetRef.current ? targetRef.current.offsetWidth : 0,
@@ -15,14 +15,12 @@ export function useDimensions(targetRef: RefObject<HTMLElement>) {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useLayoutEffect(() => {
     handleResize();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return dimensions;
 }

@@ -12,8 +12,8 @@ const TimeLine: React.FC = () => {
   const { width } = useWindowSize();
   const measurementUnit = (width - 100) / 24;
 
-  console.log(measurementUnit)
-  
+  console.log(measurementUnit);
+
   return (
     <Container>
       <TimeLineComponent>
@@ -23,7 +23,7 @@ const TimeLine: React.FC = () => {
               key={item.programId}
               item={item}
               measureUnit={measurementUnit}
-            /> 
+            />
           ))
         }
       </TimeLineComponent>
@@ -31,6 +31,6 @@ const TimeLine: React.FC = () => {
       <Meassuring />
     </Container>
   );
-}
+};
 
 export default TimeLine;

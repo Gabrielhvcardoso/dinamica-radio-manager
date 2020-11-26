@@ -28,7 +28,7 @@ export const Overlay = styled(motion.div).attrs({
     type: 'spring',
     stiffness: 260,
     damping: 20
-  },
+  }
 })`
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
@@ -78,7 +78,7 @@ export const ImageOverlay = styled.div`
 export const Title = styled(motion.h1).attrs({
   initial: { translateX: -100, opacity: 0 },
   animate: { translateX: 0, opacity: 1 },
-  exit: { translateX: -100, opacity: 0 },
+  exit: { translateX: -100, opacity: 0 }
 })`
   box-sizing: border-box;
   font-size: 32px;

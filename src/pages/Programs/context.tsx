@@ -33,13 +33,13 @@ export const ProgramsPageContextProvider: React.FC = ({ children }) => {
 
   const filteredPrograms = useMemo(() => {
     if (selectedCategories[0]) {
-      return programs.filter((program) => program.tags?.some((item => {
-        return selectedCategories.some((categoryId) => categoryId === item)
-      })))
+      return programs.filter((program) => program.tags?.some(item => {
+        return selectedCategories.some((categoryId) => categoryId === item);
+      }));
     }
 
     return programs;
-}, [programs, selectedCategories]);
+  }, [programs, selectedCategories]);
 
   return (
     <ProgramsPageContext.Provider value={{
@@ -57,11 +57,11 @@ export const ProgramsPageContextProvider: React.FC = ({ children }) => {
       setCategories,
 
       selectedCategories,
-      setSelectedCategories,
+      setSelectedCategories
     }}>
       { children }
     </ProgramsPageContext.Provider>
   );
-}
+};
 
 export default ProgramsPageContext;

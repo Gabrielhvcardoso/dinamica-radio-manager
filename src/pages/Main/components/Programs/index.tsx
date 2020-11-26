@@ -22,6 +22,6 @@ const Programs: React.FC = () => {
       </ScrollView>
     </Container>
   );
-}
+};
 
 export default Programs;

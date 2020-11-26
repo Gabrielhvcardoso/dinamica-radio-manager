@@ -9,7 +9,7 @@ export const Overlay = styled(motion.div).attrs({
     type: 'spring',
     stiffness: 260,
     damping: 20
-  },
+  }
 })`
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;

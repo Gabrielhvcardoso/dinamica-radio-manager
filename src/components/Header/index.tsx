@@ -6,26 +6,25 @@ import './shake.css';
 
 const resolvePathname = (path: string) => {
   switch (path) {
-    default: return 'home';
-    case '/timetable': return 'timetable';
-    case '/events': return 'events';
     case '/programs': return 'programs';
+    case '/events': return 'events';
+    case '/timetable': return 'timetable';
+    default: return 'home';
   }
-}
+};
 
 const Header: React.FC<RouteComponentProps> = ({ location }) => {
   const [shake, setShake] = useState<boolean>(false);
 
   const underlinePosition = useMemo<number>(() => {
     if (shake) setShake(false);
-    
+
     switch (location.pathname) {
-      default: return 360;
-      case '/timetable': return 240;
-      case '/events': return 120;
       case '/programs': return 0;
+      case '/events': return 120;
+      case '/timetable': return 240;
+      default: return 360;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   return (
@@ -34,7 +33,7 @@ const Header: React.FC<RouteComponentProps> = ({ location }) => {
       <Nav>
         <Nav>
           <LinkUnderline
-            className={`${resolvePathname(location.pathname)} ${shake ? "shake-animation" : ""}`}
+            className={`${resolvePathname(location.pathname)} ${shake ? 'shake-animation' : ''}`}
             onAnimationEnd={() => setShake(false)}
             onClick={() => setShake(true)}
             position={-(underlinePosition ?? 360)}
@@ -45,13 +44,13 @@ const Header: React.FC<RouteComponentProps> = ({ location }) => {
           <NavLink to="/events">Eventos</NavLink>
           <NavLink to="/programs">Programas</NavLink>
         </Nav>
-          
+
         <Nav style={{ flex: 0 }}>
           <NavLinkWithoutRedirect>Sair</NavLinkWithoutRedirect>
         </Nav>
       </Nav>
     </Container>
   );
-}
+};
 
 export default withRouter(Header);

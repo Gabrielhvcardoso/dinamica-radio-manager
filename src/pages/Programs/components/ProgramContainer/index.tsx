@@ -18,22 +18,22 @@ const ProgramContainer: React.FC = () => {
 
   const findCategoryById = (id: number) => {
     return categories.find(({ categoryId }) => categoryId === id);
-  }
+  };
 
   const findOtherOfCategory = (id: number) => {
     setSelectedCategories([id]);
     onDismiss();
-  }
+  };
 
   const handleDeleteTag = (categoryId: number) => {
     useFetch.delete(`/tag/${selected?.programId}/${categoryId}`, (response: any) => {
       if (response.code === 'success') {
-        handleRemoveTag(categoryId)
+        handleRemoveTag(categoryId);
       } else {
-        alert(response.message ?? "No error message received.")
+        alert(response.message ?? 'No error message received.');
       }
-    })
-  }
+    });
+  };
 
   const handleRemoveTag = (categoryId: number) => {
     if (selected) {
@@ -43,15 +43,15 @@ const ProgramContainer: React.FC = () => {
         const program = {
           ...selected,
           tags: selected.tags.filter((tag) => tag !== categoryId)
-        }
+        };
 
         setSelected(program);
         setPrograms(update(programs, {
-          [programIndex]: { $set: program },
+          [programIndex]: { $set: program }
         }));
       }
     }
-  }
+  };
 
   return (
     <Portal>
@@ -85,28 +85,30 @@ const ProgramContainer: React.FC = () => {
                 </ImageOverlay>
 
                 <CategoryList>
-                  { selected?.tags ? selected.tags.map((tag) => (
-                    <AnimatePresence>
-                      <motion.div
-                        initial={{ translateX: -100, opacity: 0 }}
-                        animate={{ translateX: 0, opacity: 1 }}
-                        exit={{ translateX: -100, opacity: 0 }}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                      >
-                        <CategoryTag key={tag} onClick={() => findOtherOfCategory(tag)}>{ findCategoryById(tag)?.name }</CategoryTag>
-                        <div onClick={() => handleDeleteTag(tag)}>
-                          <Icon
-                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', boxSizing: 'border-box', borderRadius: '50%', padding: 3, margin: 'auto' }}
-                            path={mdiClose}
-                            size={0.8}
-                            color="white"
-                          />
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
-                  )) : (
+                  { selected?.tags
+                    ? selected.tags.map((tag) => (
+                      <AnimatePresence key={tag}>
+                        <motion.div
+                          initial={{ translateX: -100, opacity: 0 }}
+                          animate={{ translateX: 0, opacity: 1 }}
+                          exit={{ translateX: -100, opacity: 0 }}
+                          style={{ display: 'flex', alignItems: 'center' }}
+                        >
+                          <CategoryTag onClick={() => findOtherOfCategory(tag)}>{ findCategoryById(tag)?.name }</CategoryTag>
+                          <div onClick={() => handleDeleteTag(tag)}>
+                            <Icon
+                              style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', boxSizing: 'border-box', borderRadius: '50%', padding: 3, margin: 'auto' }}
+                              path={mdiClose}
+                              size={0.8}
+                              color="white"
+                            />
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
+                      ))
+                    : (
                     <CategoryTag>Nenhuma categoria</CategoryTag>
-                  )}
+                      )}
                   <motion.div
                     initial={{ translateX: -100, opacity: 0 }}
                     animate={{ translateX: 0, opacity: 1 }}
@@ -118,15 +120,15 @@ const ProgramContainer: React.FC = () => {
                       onClick={() => setIsCategoryPicker(true)}
                     >Atribuir</CategoryTag>
                   </motion.div>
-                  
+
                 </CategoryList>
-              </div>          
+              </div>
             </Container>
           </Overlay>
         )}
       </AnimatePresence>
     </Portal>
   );
-}
+};
 
 export default ProgramContainer;

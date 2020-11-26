@@ -10,6 +10,6 @@ const Context: React.FC = ({ children }) => {
       </DataContextProvider>
     </MobileContextProvider>
   );
-}
+};
 
 export default Context;

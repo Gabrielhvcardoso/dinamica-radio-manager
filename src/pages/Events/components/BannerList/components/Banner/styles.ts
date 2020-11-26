@@ -7,7 +7,7 @@ interface ContainerProps {
 
 export const Container = styled(motion.div)<ContainerProps>`
   align-self: stretch;
-  background-color: ${props => props.color ?? "#333"};
+  background-color: ${props => props.color ?? '#333'};
   cursor: pointer;
   flex: 1;
   margin: 0px 10px;
@@ -20,7 +20,6 @@ export const Container = styled(motion.div)<ContainerProps>`
     box-shadow: 0px 0px 20px #22222222;
   }
 `;
-
 
 export const Title = styled.span`
   color: #8bc298;

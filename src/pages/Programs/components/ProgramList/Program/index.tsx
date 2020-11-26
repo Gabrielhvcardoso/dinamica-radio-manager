@@ -13,7 +13,7 @@ const Program: React.FC<ProgramProps> = ({ program }) => {
   const { image, title } = program;
   const { isMobile } = useContext(MobileContext);
   const { setSelected } = useContext(ProgramsPageContext);
-  
+
   return (
     <Container isMobile={isMobile} onClick={() => setSelected(program)}>
       <Overlay>
@@ -22,6 +22,6 @@ const Program: React.FC<ProgramProps> = ({ program }) => {
       <Image src={image} alt={title} />
     </Container>
   );
-}
+};
 
 export default Program;

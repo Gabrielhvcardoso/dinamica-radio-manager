@@ -10,10 +10,10 @@ const Button: React.FC<ButtonProps> = ({ children, onClick = () => {} }) => {
   return (
     <ButtonComponent onClick={onClick} className="rotating-dashed">
       <Label>
-      { children }      
+      { children }
       </Label>
     </ButtonComponent>
   );
-}
+};
 
 export default Button;

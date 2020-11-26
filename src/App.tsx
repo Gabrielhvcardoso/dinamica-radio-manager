@@ -10,12 +10,12 @@ import { DndProvider } from 'react-dnd';
 
 import { useWindowSize } from './hooks';
 
-function App() {
+function App () {
   const { width } = useWindowSize();
   const isMobile = useMemo(() => width < 768, [width]);
 
   return (
-    <div className={`app ${isMobile ? "mobile" : "desktop"}`}>
+    <div className={`app ${isMobile ? 'mobile' : 'desktop'}`}>
       <DndProvider backend={HTML5Backend} >
         <Router history={history}>
           <Context>

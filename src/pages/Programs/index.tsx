@@ -16,20 +16,20 @@ const Programs: React.FC = () => {
     <ProgramsPageContextProvider>
       <CategoryContainer />
       <ProgramContainer />
-    
+
       <AnimateSharedLayout type="switch">
         <AnimatePresence>
         <Container className="screen-resize">
           <Title>Programas</Title>
-          
+
           <Categories />
           <ProgramList />
-        
+
         </Container>
         </AnimatePresence>
       </AnimateSharedLayout>
     </ProgramsPageContextProvider>
   );
-}
+};
 
 export default Programs;

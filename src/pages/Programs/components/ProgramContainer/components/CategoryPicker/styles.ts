@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const Backdrop = styled(motion.div).attrs({
   initial: { backgroundColor: 'rgba(0, 0, 0, 0)' },
   animate: { backgroundColor: 'rgba(0, 0, 0, 0.6)' },
-  exit: { backgroundColor: 'rgba(0, 0, 0, 0)' },
+  exit: { backgroundColor: 'rgba(0, 0, 0, 0)' }
 })`
   align-items: center;
   bottom: 0;

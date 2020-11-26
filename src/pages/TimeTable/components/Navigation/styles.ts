@@ -24,11 +24,11 @@ export const Selected = styled.span`
 `;
 
 interface SelectorProps {
-  selected?: boolean; 
+  selected?: boolean;
 }
 
 export const Selector = styled.span<SelectorProps>`
-  background-color: ${props => props.selected ? '#8BC298' : '#202020' };
+  background-color: ${props => props.selected ? '#8BC298' : '#202020'};
   border-radius: 16px;
   color: white;
   cursor: pointer;
@@ -45,7 +45,7 @@ export const Selector = styled.span<SelectorProps>`
 `;
 
 export const AddButton = styled(motion.span)<SelectorProps>`
-  background-color: ${props => props.selected ? '#8BC298' : '#202020' };
+  background-color: ${props => props.selected ? '#8BC298' : '#202020'};
   border-radius: 16px;
   color: white;
   cursor: pointer;

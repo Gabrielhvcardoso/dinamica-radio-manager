@@ -13,7 +13,7 @@ const resolveDecimalTime = (time: number): string => {
   const hours = Math.floor(time);
   const minutes = Math.round((time - hours) * 60).toString();
   return `${(hours === 24 ? 0 : hours).toString().padStart(2, '0')}:${minutes.padStart(2, '0')}`;
-} 
+};
 
 const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) => {
   const { moveProgram } = useContext(TimeTableContext);
@@ -40,7 +40,7 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) =>
             order={order}
             style={{
               width: duration * measureUnit + 'px',
-              transform: `translate3d(${x}px, 0px, 0)`,
+              transform: `translate3d(${x}px, 0px, 0)`
             }}
             title={title}
           />
@@ -48,6 +48,6 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) =>
       }
     </Motion>
   );
-}
+};
 
 export default MotionFunction;

@@ -68,5 +68,5 @@ export const LinkUnderline = styled.div<LinkUnderlineProps>`
   transition: .6s;
   width: 120px;
 
-  transform: translateX(${ props => `${props.position}px` ?? 0 });
+  transform: translateX(${props => `${props.position}px` ?? 0});
 `;

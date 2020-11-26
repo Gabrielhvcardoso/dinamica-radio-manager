@@ -18,6 +18,6 @@ const Alert: React.FC<AlertProps> = ({ children, error }) => {
       </Container>
     </Portal>
   );
-}
+};
 
 export default Alert;

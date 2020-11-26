@@ -1,4 +1,4 @@
-import update from 'immutability-helper'
+import update from 'immutability-helper';
 import React, { createContext, useEffect, useState } from 'react';
 import { Program } from '../../types/Program';
 
@@ -56,9 +56,8 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
         break;
       default:
         reorder(saturday);
-        break;;
+        break; ;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   // Programs manipulation
@@ -76,7 +75,6 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       newPrograms = (update(programs, {
         [index]: { duration: { $set: duration } }
       }));
-      
     } else {
       // When resized item is the last item
       if (duration + programs[index].accumulated <= 24) {
@@ -91,34 +89,34 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     }
 
     reorder(newPrograms);
-  }
+  };
 
   const moveProgram = (dragDirtyId: string, hoverDirtyId: string) => {
-    const dragId = parseInt(dragDirtyId.split("-")[1]);
-    const hoverId = parseInt(hoverDirtyId.split("-")[1]);
-    
+    const dragId = parseInt(dragDirtyId.split('-')[1]);
+    const hoverId = parseInt(hoverDirtyId.split('-')[1]);
+
     const dragIndex = programs.findIndex((el) => el.programId === dragId);
     const hoverIndex = programs.findIndex((el) => el.programId === hoverId);
-  
+
     const drag = programs[dragIndex];
     const hover = programs[hoverIndex];
-    
+
     // Create a new instance of programs state
     let newPrograms = programs;
 
     // Set new order
     newPrograms = update(newPrograms, {
       [hoverIndex]: { order: { $set: drag.order } },
-      [dragIndex]: { order: { $set: hover.order } } 
+      [dragIndex]: { order: { $set: hover.order } }
     });
 
     reorder(newPrograms);
-  }
+  };
 
   const reorder = (newprograms = programs) => {
     let newPrograms = newprograms;
     let accumulated = 0;
-    newPrograms = newPrograms.sort((a,b) => a.order > b.order ? 1 : -1).reduce((acc, item) => {
+    newPrograms = newPrograms.sort((a, b) => a.order > b.order ? 1 : -1).reduce((acc, item) => {
       acc.push({
         ...item,
         accumulated
@@ -128,9 +126,9 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       return acc;
     }, [] as Array<ScheduleProgram>);
 
-    newPrograms = newPrograms.sort((a,b) => a.programId > b.programId ? 1 : -1);
+    newPrograms = newPrograms.sort((a, b) => a.programId > b.programId ? 1 : -1);
 
-    const lastOrderIndex = newPrograms.findIndex(item => item.order === programs.reduce((prev, curr) => prev > curr.order ? prev : curr.order, 0))
+    const lastOrderIndex = newPrograms.findIndex(item => item.order === programs.reduce((prev, curr) => prev > curr.order ? prev : curr.order, 0));
     if (lastOrderIndex > -1) {
       if (newPrograms[lastOrderIndex].accumulated + newPrograms[lastOrderIndex].duration > 24) {
         const newDuration = 24 - newPrograms[lastOrderIndex].accumulated;
@@ -138,7 +136,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
         if (newDuration >= 0.1) {
           newPrograms = update(newPrograms, {
             [lastOrderIndex]: { duration: { $set: newDuration } }
-          })
+          });
         } else {
           return;
         }
@@ -146,7 +144,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     }
 
     setPrograms(newPrograms);
-  }
+  };
 
   // Provider function
 
@@ -156,16 +154,16 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       moveProgram,
       setProgramDuration,
       reorder,
-      
+
       filter,
       setFilter,
-      
+
       isSelectorActive,
       setIsSelectorActive
     }}>
       { children }
     </TimeTableContext.Provider>
   );
-}
+};
 
 export default TimeTableContext;

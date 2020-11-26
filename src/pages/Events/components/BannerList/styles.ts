@@ -8,20 +8,21 @@ interface RowProps {
 export const Row = styled(motion.div)<RowProps>`
   display: flex;
   flex: 1;
-  flex-direction: ${props => props.isMobile ? "column" : "row"};
+  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
   margin: 10px -10px;
 
-  ${props => props.isMobile ? `
-    & *:not(:last-child) {
-      margin-bottom: 20px;
+  ${props => props.isMobile
+      ? `& *:not(:last-child) {
+          margin-bottom: 20px;
+        }`
+      : ''
     }
-  ` : ""}
 `;
 
 export const Container = styled(motion.div).attrs({
   initial: { opacity: 0, translateX: -100 },
   animate: { opacity: 1, translateX: 0 },
-  exit: { opacity: 0, translateX: -100 },
+  exit: { opacity: 0, translateX: -100 }
 })`
   display: flex;
   flex: 1;

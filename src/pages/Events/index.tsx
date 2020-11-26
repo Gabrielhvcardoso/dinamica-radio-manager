@@ -15,6 +15,6 @@ const Events: React.FC = () => {
       </EventsContextProvider>
     </AnimatePresence>
   );
-}
+};
 
 export default Events;
