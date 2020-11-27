@@ -2,11 +2,15 @@ import update from 'immutability-helper';
 import React, { useContext, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Button, Container, Overlay, TextInput, TextInputSpan, Title } from './styles';
-
 import Alert from '../../../../components/Alert';
+
+import AuthContext from '../../../../context/auth';
 import ProgramsPageContext from '../../context';
 
+import { useFetch } from '../../../../hooks';
+
 const CategoryContainer: React.FC = () => {
+  const { clientId } = useContext(AuthContext);
   const { openCategory, setOpenCategory, categories, setCategories } = useContext(ProgramsPageContext);
   const onDismiss = () => setOpenCategory(false);
 
@@ -29,14 +33,25 @@ const CategoryContainer: React.FC = () => {
     const isError = errors.find(item => item.status);
     if (isError) return showAlert(isError.message);
 
-    setCategories(update(categories, {
-      $push: [{
-        categoryId: categories[categories.length - 1].categoryId + 1,
-        name: categoryTitle
-      }]
-    }));
+    useFetch.put('/cat', {
+      clientId: clientId ?? 0,
+      name: categoryTitle
+    }, (response) => {
+      if (response.code === 'success') {
+        const { categoryId } = response;
 
-    onDismiss();
+        setCategories(update(categories, {
+          $push: [{
+            categoryId,
+            name: categoryTitle
+          }]
+        }));
+
+        onDismiss();
+      } else {
+        showAlert('Ocorreu um erro ao tentar inserir a nova categoria');
+      }
+    });
   };
 
   return (
