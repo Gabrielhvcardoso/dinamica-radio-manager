@@ -14,6 +14,8 @@ interface ContextTypes {
 
   openCategory: boolean,
   setOpenCategory: (arg: boolean) => void,
+  openProduct: boolean,
+  setOpenProduct: (arg: boolean) => void,
 
   categories: Array<Category>,
   setCategories: (arg: Array<Category>) => void,
@@ -27,9 +29,10 @@ const ProgramsPageContext = createContext<ContextTypes>({} as ContextTypes);
 export const ProgramsPageContextProvider: React.FC = ({ children }) => {
   const { programs, setPrograms, categories, setCategories } = useContext(ProgramsContext);
   const [selected, setSelected] = useState<Program | null>(null);
-  const [openCategory, setOpenCategory] = useState<boolean>(false);
-
   const [selectedCategories, setSelectedCategories] = useState<Array<number>>([]);
+
+  const [openCategory, setOpenCategory] = useState<boolean>(false);
+  const [openProduct, setOpenProduct] = useState<boolean>(false);
 
   const filteredPrograms = useMemo(() => {
     if (selectedCategories[0]) {
@@ -52,6 +55,8 @@ export const ProgramsPageContextProvider: React.FC = ({ children }) => {
 
       openCategory,
       setOpenCategory,
+      openProduct,
+      setOpenProduct,
 
       categories,
       setCategories,
