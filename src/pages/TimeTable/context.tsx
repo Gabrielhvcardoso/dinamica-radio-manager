@@ -29,6 +29,7 @@ interface TimeTableInterface {
   setProgramDuration: (programId: number, duration: number) => void,
   reorder: (newprograms?: Array<ScheduleProgram>) => void,
   saveWeekday: (onSuccess?: () => void) => void,
+  insertProgram: (program: Program, onError: (message: string) => void, onSuccess: () => void) => void
 
   filter: number,
   setFilter: (arg1: number) => void,
@@ -181,6 +182,27 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     setPrograms(newPrograms);
   };
 
+  const insertProgram = (program: Program, onError = (message: string) => {}, onSuccess = () => {}) => {
+    const lastOrderIndex = programs.findIndex(item => item.order === programs.reduce((prev, curr) => prev > curr.order ? prev : curr.order, 0));
+    const startAt = lastOrderIndex > -1 ? programs[lastOrderIndex].startAt + programs[lastOrderIndex].duration : 0;
+
+    if (startAt === 24) {
+      // There's no space to insert
+      return onError(`Não existe espaço para ${program.title ?? 'este programa'} ser inserido.`);
+    }
+
+    setPrograms(update(programs, {
+      $push: [{
+        ...program,
+        order: lastOrderIndex + 1,
+        startAt,
+        duration: 24 - startAt
+      }]
+    }));
+
+    onSuccess();
+  };
+
   // Save updates
 
   const saveWeekday = (onSuccess?: () => void) => {
@@ -222,6 +244,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       setProgramDuration,
       reorder,
       saveWeekday,
+      insertProgram,
 
       filter,
       setFilter,
