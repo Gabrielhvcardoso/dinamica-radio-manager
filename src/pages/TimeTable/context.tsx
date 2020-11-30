@@ -1,14 +1,22 @@
 import update from 'immutability-helper';
 import React, { createContext, useEffect, useState } from 'react';
+import { useFetch } from '../../hooks';
 import { Program } from '../../types/Program';
-
-import { sunday, monday, tuesday, wednesday, thursday, friday, saturday } from './sampleData';
 
 export interface ScheduleProgram extends Program {
   order: number,
-  accumulated: number,
-  duration: number,
   startAt: number,
+  duration: number,
+}
+
+export interface Schedule {
+  sunday: Array<ScheduleProgram>,
+  monday: Array<ScheduleProgram>,
+  tuesday: Array<ScheduleProgram>,
+  wednesday: Array<ScheduleProgram>,
+  thursday: Array<ScheduleProgram>,
+  friday: Array<ScheduleProgram>,
+  saturday: Array<ScheduleProgram>,
 }
 
 interface TimeTableInterface {
@@ -32,31 +40,45 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
   const [isSelectorActive, setIsSelectorActive] = useState<boolean>(false);
   const [filter, setFilter] = useState<number>(0);
 
-  const [programs, setPrograms] = useState<Array<ScheduleProgram>>(sunday);
+  const [schedule, setSchedule] = useState<Schedule | null>(null);
+  const [programs, setPrograms] = useState<Array<ScheduleProgram>>([]);
+
+  // Call to API
 
   useEffect(() => {
-    switch (filter) {
-      case 0:
-        reorder(sunday);
-        break;
-      case 1:
-        reorder(monday);
-        break;
-      case 2:
-        reorder(tuesday);
-        break;
-      case 3:
-        reorder(wednesday);
-        break;
-      case 4:
-        reorder(thursday);
-        break;
-      case 5:
-        reorder(friday);
-        break;
-      default:
-        reorder(saturday);
-        break; ;
+    useFetch.get('/sch', (response: any) => {
+      setSchedule(response);
+      setPrograms(response.sunday);
+    });
+  }, []);
+
+  // Filter switcher
+
+  useEffect(() => {
+    if (schedule) {
+      switch (filter) {
+        case 0:
+          reorder(schedule.sunday);
+          break;
+        case 1:
+          reorder(schedule.monday);
+          break;
+        case 2:
+          reorder(schedule.tuesday);
+          break;
+        case 3:
+          reorder(schedule.wednesday);
+          break;
+        case 4:
+          reorder(schedule.thursday);
+          break;
+        case 5:
+          reorder(schedule.friday);
+          break;
+        default:
+          reorder(schedule.saturday);
+          break; ;
+      }
     }
   }, [filter]);
 
@@ -77,13 +99,13 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       }));
     } else {
       // When resized item is the last item
-      if (duration + programs[index].accumulated <= 24) {
+      if (duration + programs[index].startAt <= 24) {
         newPrograms = (update(programs, {
           [index]: { duration: { $set: duration } }
         }));
       } else {
         newPrograms = (update(programs, {
-          [index]: { duration: { $set: 24 - programs[index].accumulated } }
+          [index]: { duration: { $set: 24 - programs[index].startAt } }
         }));
       }
     }
@@ -115,14 +137,14 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
 
   const reorder = (newprograms = programs) => {
     let newPrograms = newprograms;
-    let accumulated = 0;
+    let startAt = 0;
     newPrograms = newPrograms.sort((a, b) => a.order > b.order ? 1 : -1).reduce((acc, item) => {
       acc.push({
         ...item,
-        accumulated
+        startAt
       });
 
-      accumulated += item.duration;
+      startAt += item.duration;
       return acc;
     }, [] as Array<ScheduleProgram>);
 
@@ -130,8 +152,8 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
 
     const lastOrderIndex = newPrograms.findIndex(item => item.order === programs.reduce((prev, curr) => prev > curr.order ? prev : curr.order, 0));
     if (lastOrderIndex > -1) {
-      if (newPrograms[lastOrderIndex].accumulated + newPrograms[lastOrderIndex].duration > 24) {
-        const newDuration = 24 - newPrograms[lastOrderIndex].accumulated;
+      if (newPrograms[lastOrderIndex].startAt + newPrograms[lastOrderIndex].duration > 24) {
+        const newDuration = 24 - newPrograms[lastOrderIndex].startAt;
 
         if (newDuration >= 0.1) {
           newPrograms = update(newPrograms, {

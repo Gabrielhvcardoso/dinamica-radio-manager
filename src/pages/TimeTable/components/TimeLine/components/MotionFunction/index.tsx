@@ -17,13 +17,13 @@ const resolveDecimalTime = (time: number): string => {
 
 const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) => {
   const { moveProgram } = useContext(TimeTableContext);
-  const { accumulated, programId, order, title, duration } = item;
+  const { startAt, programId, order, title, duration } = item;
 
   return (
     <Motion
       style={{
         x: spring(
-          accumulated * measureUnit,
+          startAt * measureUnit,
           { stiffness: 500, damping: 50 }
         )
       }}
@@ -32,8 +32,8 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) =>
         ({ x }) => (
           <Program
             duration={resolveDecimalTime(duration)}
-            startAt={resolveDecimalTime(accumulated)}
-            endAt={resolveDecimalTime(accumulated + duration)}
+            startAt={resolveDecimalTime(startAt)}
+            endAt={resolveDecimalTime(startAt + duration)}
             id={`program-${programId}`}
             measureUnit={measureUnit}
             moveProgram={moveProgram}
