@@ -3,7 +3,10 @@ import { Container, CloseButton, Header, ListView, Overlay, Program, Title } fro
 import TimeTableContext from '../../context';
 import { AnimatePresence } from 'framer-motion';
 
+import DataContext from '../../../../context/data';
+
 const ProgramSelector: React.FC = () => {
+  const { programs } = useContext(DataContext);
   const { isSelectorActive, setIsSelectorActive } = useContext(TimeTableContext);
 
   const onDismiss = () => setIsSelectorActive(false);
@@ -20,19 +23,11 @@ const ProgramSelector: React.FC = () => {
               </Header>
 
               <ListView>
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
-                <Program />
+                {
+                  programs.map((item) => (
+                    <Program key={item.programId} src={item.image} alt={item.title} title={item.title} />
+                  ))
+                }
               </ListView>
             </Container>
           </Overlay>

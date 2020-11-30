@@ -66,7 +66,7 @@ export const CloseButton = styled.div`
   }
 `;
 
-export const Program = styled(motion.div)`
+export const Program = styled(motion.img)`
   background-color: #202020;
   border-radius: 10px;
   cursor: pointer;
