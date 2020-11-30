@@ -1,21 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Container, TimeLine as TimeLineComponent } from './styles';
 import { useWindowSize } from '../../../../hooks';
 import TimeTableContext from '../../context';
+import Alert from '../../../../components/Alert';
 
 import Meassuring from './components/Meassuring';
 import MotionFunction from './components/MotionFunction';
 
 const TimeLine: React.FC = () => {
-  const { programs } = useContext(TimeTableContext);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const { isSavingWeekday, programs, saveWeekday } = useContext(TimeTableContext);
 
   const { width } = useWindowSize();
   const measurementUnit = (width - 100) / 24;
 
-  console.log(measurementUnit);
+  const onSuccess = () => {
+    setIsSuccess(true);
+    setTimeout(() => {
+      setIsSuccess(false);
+    }, 4000);
+  };
 
   return (
     <Container>
+      {
+        isSuccess && (
+          <Alert>
+            Suas mudanças foram salvas com sucesso!
+          </Alert>
+        )
+      }
       <TimeLineComponent>
         {
           programs.map((item) => (
@@ -31,7 +45,11 @@ const TimeLine: React.FC = () => {
       <Meassuring />
 
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 50 }}>
-        <Button>Salvar dia da semana</Button>
+        {
+          !isSavingWeekday
+            ? <Button onClick={() => saveWeekday(onSuccess)}>Salvar dia da semana</Button>
+            : <Button>Salvando...</Button>
+        }
       </div>
     </Container>
   );

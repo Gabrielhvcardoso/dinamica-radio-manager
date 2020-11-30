@@ -1,7 +1,9 @@
 import update from 'immutability-helper';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useFetch } from '../../hooks';
 import { Program } from '../../types/Program';
+
+import AuthContext from '../../context/auth';
 
 export interface ScheduleProgram extends Program {
   order: number,
@@ -20,10 +22,13 @@ export interface Schedule {
 }
 
 interface TimeTableInterface {
+  isSavingWeekday: boolean,
+
   programs: Array<ScheduleProgram>,
   moveProgram: (dragDirtyId: string, hoverDirtyId: string) => void,
   setProgramDuration: (programId: number, duration: number) => void,
   reorder: (newprograms?: Array<ScheduleProgram>) => void,
+  saveWeekday: (onSuccess?: () => void) => void,
 
   filter: number,
   setFilter: (arg1: number) => void,
@@ -37,11 +42,17 @@ interface TimeTableInterface {
 const TimeTableContext = createContext({} as TimeTableInterface);
 
 export const TimeTableContextProvider: React.FC = ({ children }) => {
+  const { clientId } = useContext(AuthContext);
+
   const [isSelectorActive, setIsSelectorActive] = useState<boolean>(false);
   const [filter, setFilter] = useState<number>(0);
 
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [programs, setPrograms] = useState<Array<ScheduleProgram>>([]);
+
+  // Feedback Controllers
+
+  const [isSavingWeekday, setIsSavingWeekday] = useState<boolean>(false);
 
   // Call to API
 
@@ -168,14 +179,47 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     setPrograms(newPrograms);
   };
 
+  // Save updates
+
+  const saveWeekday = (onSuccess?: () => void) => {
+    setIsSavingWeekday(true);
+
+    if (schedule) {
+      const body = {
+        clientId,
+        weekday: filter + 1,
+        programs: programs.map(({ programId, startAt, duration }) => ({ programId, startAt, duration }))
+      };
+
+      console.log(body);
+
+      useFetch.post('/sch', body, (response) => {
+        if (response.code === 'success') {
+          const weekday = Object.keys(schedule)[filter];
+          onSuccess && onSuccess();
+          setSchedule(update(schedule, {
+            [weekday]: { $set: programs }
+          }));
+        } else {
+          alert('error');
+        }
+
+        setIsSavingWeekday(false);
+      });
+    }
+  };
+
   // Provider function
 
   return (
     <TimeTableContext.Provider value={{
+      isSavingWeekday,
+
       programs,
       moveProgram,
       setProgramDuration,
       reorder,
+      saveWeekday,
 
       filter,
       setFilter,
