@@ -11,3 +11,18 @@ export const TimeLine = styled.div`
   height: 100px;
   padding: 20px 0px;
 `;
+
+export const Button = styled.button`
+  background-color: #303030;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 17px;
+  outline: none;
+  padding: 10px 25px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;

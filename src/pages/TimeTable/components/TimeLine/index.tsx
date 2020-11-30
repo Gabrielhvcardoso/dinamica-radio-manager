@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container, TimeLine as TimeLineComponent } from './styles';
+import { Button, Container, TimeLine as TimeLineComponent } from './styles';
 import { useWindowSize } from '../../../../hooks';
 import TimeTableContext from '../../context';
 
@@ -29,6 +29,10 @@ const TimeLine: React.FC = () => {
       </TimeLineComponent>
 
       <Meassuring />
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 50 }}>
+        <Button>Salvar dia da semana</Button>
+      </div>
     </Container>
   );
 };
