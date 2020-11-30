@@ -161,6 +161,8 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
 
     newPrograms = newPrograms.sort((a, b) => a.programId > b.programId ? 1 : -1);
 
+    // Avoid timeline x asis overflow
+
     const lastOrderIndex = newPrograms.findIndex(item => item.order === programs.reduce((prev, curr) => prev > curr.order ? prev : curr.order, 0));
     if (lastOrderIndex > -1) {
       if (newPrograms[lastOrderIndex].startAt + newPrograms[lastOrderIndex].duration > 24) {
