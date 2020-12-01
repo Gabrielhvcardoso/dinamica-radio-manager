@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Motion, spring } from 'react-motion';
 import TimeTableContext, { ScheduleProgram } from '../../../../context';
+import { ContextMenuContextProvider } from './contextMenuContext';
 
 import Program from './Program';
 
@@ -20,33 +21,35 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) =>
   const { startAt, hash, order, title, duration } = item;
 
   return (
-    <Motion
-      style={{
-        x: spring(
-          startAt * measureUnit,
-          { stiffness: 500, damping: 50 }
-        )
-      }}
-    >
-      {
-        ({ x }) => (
-          <Program
-            duration={resolveDecimalTime(duration)}
-            startAt={resolveDecimalTime(startAt)}
-            endAt={resolveDecimalTime(startAt + duration)}
-            id={hash}
-            measureUnit={measureUnit}
-            moveProgram={moveProgram}
-            order={order}
-            style={{
-              width: duration * measureUnit + 'px',
-              transform: `translate3d(${x}px, 0px, 0)`
-            }}
-            title={title}
-          />
-        )
-      }
-    </Motion>
+    <ContextMenuContextProvider>
+      <Motion
+        style={{
+          x: spring(
+            startAt * measureUnit,
+            { stiffness: 500, damping: 50 }
+          )
+        }}
+      >
+        {
+          ({ x }) => (
+            <Program
+              duration={resolveDecimalTime(duration)}
+              startAt={resolveDecimalTime(startAt)}
+              endAt={resolveDecimalTime(startAt + duration)}
+              id={hash}
+              measureUnit={measureUnit}
+              moveProgram={moveProgram}
+              order={order}
+              style={{
+                width: duration * measureUnit + 'px',
+                transform: `translate3d(${x}px, 0px, 0)`
+              }}
+              title={title}
+            />
+          )
+        }
+      </Motion>
+    </ContextMenuContextProvider>
   );
 };
 

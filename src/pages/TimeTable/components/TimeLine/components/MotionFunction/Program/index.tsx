@@ -1,7 +1,8 @@
 import React, { SyntheticEvent } from 'react';
 import { DragSource, DropTarget, ConnectDragSource, ConnectDropTarget } from 'react-dnd';
-import { Draggable } from './styles';
+import { Draggable, NoWrapText } from './styles';
 import TimeTableContext from '../../../../../context';
+import ContextMenuContext from '../contextMenuContext';
 
 const ItemTypes = {
   CARD: 'card'
@@ -119,46 +120,28 @@ class TempProgram extends React.Component<TempProgramProps> {
     const zIndex = isDragging ? 2 : 1;
 
     return connectDragSource(connectDropTarget(
-        <div
-          draggable={false}
-          id={id}
-          style={{
-            ...style,
-            opacity,
-            zIndex,
-            backgroundColor: '#E07A5F',
-            borderLeft: '1px solid black',
-            borderRadius: 10,
-            boxSizing: 'border-box',
-            cursor: 'grab',
-            display: 'flex',
-            flexDirection: 'column',
-            height: 100,
-            justifyContent: 'space-between',
-            padding: 10,
-            position: 'absolute'
-          }}
-        >
-          <span style={{
-            alignSelf: 'flex-start',
-            backgroundColor: 'white',
-            borderRadius: 16,
-            fontSize: 12,
-            padding: '1px 8px'
-          }}>{ duration } hrs</span>
+      <div onContextMenu={(e) => this.context.handleContextMenu(e, id)} draggable={false} id={id} style={{ ...style, opacity, zIndex, backgroundColor: '#E07A5F', borderLeft: '1px solid black', borderRadius: 10, boxSizing: 'border-box', cursor: 'grab', display: 'flex', flexDirection: 'column', height: 100, justifyContent: 'space-between', padding: 10, position: 'absolute' }} >
+        <NoWrapText style={{ alignSelf: 'flex-start', backgroundColor: 'white', borderRadius: 16, fontSize: 12, padding: '1px 8px' }}>
+          { duration } hrs
+        </NoWrapText>
 
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span>{ title }</span>
-            <span style={{ fontSize: 11 }}>{ `${startAt} - ${endAt}` }</span>
-          </div>
-
-          <Draggable className="right-resizer" onMouseDown={(e) => handleResize(e, measureUnit, this.context.setProgramDuration)} />
+        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
+          <NoWrapText>{ title }</NoWrapText>
+          <NoWrapText style={{ fontSize: 11 }}>{ `${startAt} - ${endAt}` }</NoWrapText>
         </div>
-    )
-    );
+
+        <TimeTableContext.Consumer>
+          {
+            ({ setProgramDuration }) => (
+              <Draggable className="right-resizer" onMouseDown={(e) => handleResize(e, measureUnit, setProgramDuration)} />
+            )
+          }
+        </TimeTableContext.Consumer>
+      </div>
+    ));
   }
 }
 
-TempProgram.contextType = TimeTableContext;
+TempProgram.contextType = ContextMenuContext;
 
 export default dropTargetHOC(dragSourceHOC(TempProgram));

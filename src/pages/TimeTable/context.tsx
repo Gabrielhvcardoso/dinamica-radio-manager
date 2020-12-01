@@ -32,7 +32,8 @@ interface TimeTableInterface {
   setProgramDuration: (programId: string, duration: number) => void,
   reorder: (newprograms?: Array<ScheduleProgram>) => void,
   saveWeekday: (onSuccess?: () => void) => void,
-  insertProgram: (program: Program, onError: (message: string) => void, onSuccess: () => void) => void
+  insertProgram: (program: Program, onError: (message: string) => void, onSuccess: () => void) => void,
+  removeProgram: (hash: string, onError?: (message: string) => void, onSuccess?: () => void) => void,
 
   filter: number,
   setFilter: (arg1: number) => void,
@@ -204,6 +205,19 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     onSuccess();
   };
 
+  const removeProgram = (hash: string, onError = (message: string) => {}, onSuccess = () => {}) => {
+    const index = programs.findIndex(item => item.hash === hash);
+
+    if (index > -1) {
+      onSuccess();
+      reorder(update(programs, {
+        $splice: [[index, 1]]
+      }));
+    } else {
+      onError('Impossível remover item com hash indefinido, por favor, atualize sua página e tente novamente.');
+    }
+  };
+
   // Save updates
 
   const saveWeekday = (onSuccess?: () => void) => {
@@ -246,6 +260,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       reorder,
       saveWeekday,
       insertProgram,
+      removeProgram,
 
       filter,
       setFilter,
