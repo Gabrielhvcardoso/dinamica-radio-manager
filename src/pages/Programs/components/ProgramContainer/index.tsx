@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Portal } from 'react-portal';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CategoryList, CategoryTag, Container, ImageEdit, ImageHeader, ImageOverlay, Overlay, Title } from './styles';
+import { CategoryList, CategoryTag, Container, ImageEdit, ImageHeader, ImageOverlay, Title } from './styles';
 import { Icon } from '@mdi/react';
 import { mdiImageEditOutline, mdiClose } from '@mdi/js';
 import update from 'immutability-helper';
@@ -9,6 +9,7 @@ import update from 'immutability-helper';
 import CategoryPicker from './components/CategoryPicker';
 import ProgramsPageContext from '../../context';
 import { useFetch } from '../../../../hooks';
+import Backdrop from '../../../../components/Backdrop';
 
 const ProgramContainer: React.FC = () => {
   const { categories, programs, setPrograms, selected, setSelected, setSelectedCategories } = useContext(ProgramsPageContext);
@@ -57,7 +58,7 @@ const ProgramContainer: React.FC = () => {
     <Portal>
       <AnimatePresence>
         { selected && (
-          <Overlay onMouseDown={onDismiss}>
+          <Backdrop onMouseDown={onDismiss}>
             <Container onMouseDown={e => e.stopPropagation()} layoutId={selected?.toString()}>
 
               <AnimatePresence>
@@ -124,7 +125,7 @@ const ProgramContainer: React.FC = () => {
                 </CategoryList>
               </div>
             </Container>
-          </Overlay>
+          </Backdrop>
         )}
       </AnimatePresence>
     </Portal>

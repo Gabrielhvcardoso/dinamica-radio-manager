@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Button, CloseButton, Container, Detail, Headline, Helper, ImageBackdrop, ImagePicker, Overlay, Section, Textarea, TextInput, Title } from './styles';
+import Backdrop from '../../../../components/Backdrop';
+import { Button, CloseButton, Container, Detail, Headline, Helper, ImageBackdrop, ImagePicker, Section, Textarea, TextInput, Title } from './styles';
 
 import Select from 'react-select';
 import { selectStyles } from './selectStyles';
@@ -39,7 +40,7 @@ const BannerModal: React.FC = () => {
     <AnimatePresence>
       {
         event && (
-          <Overlay onMouseDown={onDismiss}>
+          <Backdrop onMouseDown={onDismiss}>
             <Container isMobile={isMobile} onMouseDown={e => e.stopPropagation()} layoutId={`banner-${event.bannerId}`}>
               <CloseButton onClick={onDismiss}>
                 <Icon path={mdiClose}
@@ -158,7 +159,7 @@ const BannerModal: React.FC = () => {
               </div>
 
             </Container>
-          </Overlay>
+          </Backdrop>
         )
       }
     </AnimatePresence>

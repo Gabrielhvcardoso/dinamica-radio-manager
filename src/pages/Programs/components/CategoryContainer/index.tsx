@@ -1,8 +1,9 @@
 import update from 'immutability-helper';
 import React, { useContext, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Button, Container, Overlay, TextInput, TextInputSpan, Title } from './styles';
+import { Button, Container, TextInput, TextInputSpan, Title } from './styles';
 import Alert from '../../../../components/Alert';
+import Backdrop from '../../../../components/Backdrop';
 
 import AuthContext from '../../../../context/auth';
 import ProgramsPageContext from '../../context';
@@ -58,7 +59,7 @@ const CategoryContainer: React.FC = () => {
     <AnimatePresence>
       {
         openCategory && (
-          <Overlay onClick={onDismiss} style={{ overflow: 'hidden' }}>
+          <Backdrop onClick={onDismiss}>
             <Container onClick={e => e.stopPropagation()}>
 
               <AnimatePresence>
@@ -86,7 +87,7 @@ const CategoryContainer: React.FC = () => {
                 <Button onClick={handleSave}>Salvar</Button>
               </div>
             </Container>
-          </Overlay>
+          </Backdrop>
         )
       }
     </AnimatePresence>
