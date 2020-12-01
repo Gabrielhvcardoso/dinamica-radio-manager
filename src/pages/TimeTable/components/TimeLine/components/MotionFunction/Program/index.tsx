@@ -84,7 +84,7 @@ interface TempProgramProps {
 const handleResize = (
   e: SyntheticEvent<HTMLDivElement>,
   measureUnit: number,
-  setProgramDuration: (programId: number, duration: number) => void
+  setProgramDuration: (programHash: string, duration: number) => void
 ) => {
   e.stopPropagation();
   e.preventDefault();
@@ -101,14 +101,14 @@ const handleResize = (
   });
 };
 
-const resize = (e: MouseEvent, elementId: string, measureUnit: number, setProgramDuration: (programId: number, duration: number) => void) => {
+const resize = (e: MouseEvent, elementId: string, measureUnit: number, setProgramDuration: (programHash: string, duration: number) => void) => {
   const element = document.getElementById(elementId);
 
   if (element) {
     const elementWidth = e.pageX - element.getBoundingClientRect().left;
     const durationInHours = Math.round((elementWidth * 60) / measureUnit / 5) * 5 / 60;
-    const programId = parseInt(elementId.split('-')[1]);
-    setProgramDuration(programId, durationInHours);
+    const programHash = elementId.split('-')[1];
+    setProgramDuration(programHash, durationInHours);
   }
 };
 

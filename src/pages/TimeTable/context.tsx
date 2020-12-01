@@ -3,12 +3,15 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useFetch } from '../../hooks';
 import { Program } from '../../types/Program';
 
+import crypto from 'crypto';
+
 import AuthContext from '../../context/auth';
 
 export interface ScheduleProgram extends Program {
   order: number,
   startAt: number,
   duration: number,
+  hash: string,
 }
 
 export interface Schedule {
@@ -26,7 +29,7 @@ interface TimeTableInterface {
 
   programs: Array<ScheduleProgram>,
   moveProgram: (dragDirtyId: string, hoverDirtyId: string) => void,
-  setProgramDuration: (programId: number, duration: number) => void,
+  setProgramDuration: (programId: string, duration: number) => void,
   reorder: (newprograms?: Array<ScheduleProgram>) => void,
   saveWeekday: (onSuccess?: () => void) => void,
   insertProgram: (program: Program, onError: (message: string) => void, onSuccess: () => void) => void
@@ -96,8 +99,8 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
 
   // Programs manipulation
 
-  const setProgramDuration = (programId: number, duration: number) => {
-    const index = programs.findIndex(item => item.programId === programId);
+  const setProgramDuration = (programHash: string, duration: number) => {
+    const index = programs.findIndex(item => item.hash === programHash);
     const nextIndex = programs.findIndex(item => item.order === programs[index].order + 1);
 
     let newPrograms;
@@ -125,12 +128,12 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     reorder(newPrograms);
   };
 
-  const moveProgram = (dragDirtyId: string, hoverDirtyId: string) => {
-    const dragId = parseInt(dragDirtyId.split('-')[1]);
-    const hoverId = parseInt(hoverDirtyId.split('-')[1]);
+  const moveProgram = (dragDirtyHash: string, hoverDirtyHash: string) => {
+    const dragHash = dragDirtyHash.split('-')[1];
+    const hoverHash = hoverDirtyHash.split('-')[1];
 
-    const dragIndex = programs.findIndex((el) => el.programId === dragId);
-    const hoverIndex = programs.findIndex((el) => el.programId === hoverId);
+    const dragIndex = programs.findIndex((el) => el.hash === dragHash);
+    const hoverIndex = programs.findIndex((el) => el.hash === hoverHash);
 
     const drag = programs[dragIndex];
     const hover = programs[hoverIndex];
@@ -160,7 +163,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       return acc;
     }, [] as Array<ScheduleProgram>);
 
-    newPrograms = newPrograms.sort((a, b) => a.programId > b.programId ? 1 : -1);
+    newPrograms = newPrograms.sort((a, b) => a.hash > b.hash ? 1 : -1);
 
     // Avoid timeline x asis overflow
 
@@ -196,7 +199,8 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
         ...program,
         order: lastOrderIndex + 1,
         startAt,
-        duration: 24 - startAt
+        duration: 24 - startAt,
+        hash: crypto.randomBytes(16).toString('hex')
       }]
     }));
 
