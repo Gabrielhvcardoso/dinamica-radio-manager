@@ -49,6 +49,8 @@ const TimeTableContext = createContext({} as TimeTableInterface);
 export const TimeTableContextProvider: React.FC = ({ children }) => {
   const { clientId } = useContext(AuthContext);
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const [isSelectorActive, setIsSelectorActive] = useState<boolean>(false);
   const [filter, setFilter] = useState<number>(0);
 
@@ -65,6 +67,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     useFetch.get('/sch', (response: any) => {
       setSchedule(response);
       setPrograms(response.sunday);
+      setIsLoading(false);
     });
   }, []);
 
@@ -268,7 +271,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
       isSelectorActive,
       setIsSelectorActive
     }}>
-      { children }
+      { !isLoading && children }
     </TimeTableContext.Provider>
   );
 };

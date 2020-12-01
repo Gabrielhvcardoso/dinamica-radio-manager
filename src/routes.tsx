@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Container } from './routes.styles';
 
 // Components
 import Header from './components/Header';
@@ -17,14 +18,16 @@ import TimeTable from './pages/TimeTable';
 
 // Context
 import AuthContext from './context/auth';
+import DataContext from './context/data';
 import MobileContext from './context/mobile';
 
 const Routes: React.FC = () => {
   const { isLoading, clientId } = useContext(AuthContext);
+  const { isLoading: dataIsLoading } = useContext(DataContext);
   const { isMobile } = useContext(MobileContext);
 
-  if (isLoading) {
-    return <div></div>;
+  if (isLoading || dataIsLoading) {
+    return <Container />;
   }
 
   return (
