@@ -25,7 +25,10 @@ const ProgramContainer: React.FC = () => {
     }, 4000);
   };
 
-  const onDismiss = () => setSelected(null);
+  const onDismiss = () => {
+    setSelected(null);
+    setConfirmDelete(false);
+  };
 
   const findCategoryById = (id: number) => {
     return categories.find(({ categoryId }) => categoryId === id);
