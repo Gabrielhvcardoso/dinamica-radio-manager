@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Container, CloseButton, Header, ListView, Overlay, Program, Title } from './styles';
+import { Container, CloseButton, Header, ListView, Program, Title } from './styles';
 import { AnimatePresence } from 'framer-motion';
 import Alert from '../../../../components/Alert';
+import Backdrop from '../../../../components/Backdrop';
 
 import DataContext from '../../../../context/data';
 import TimeTableContext from '../../context';
@@ -27,7 +28,7 @@ const ProgramSelector: React.FC = () => {
     <AnimatePresence>
       {
         isSelectorActive && (
-          <Overlay onMouseDown={onDismiss}>
+          <Backdrop onMouseDown={onDismiss}>
             <AnimatePresence>
               {
                 messageError && (
@@ -55,7 +56,7 @@ const ProgramSelector: React.FC = () => {
                 }
               </ListView>
             </Container>
-          </Overlay>
+          </Backdrop>
         )
       }
 

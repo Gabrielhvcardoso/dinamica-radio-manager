@@ -1,27 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const Overlay = styled(motion.div).attrs({
-  initial: { backgroundColor: 'rgba(0, 0, 0, 0)' },
-  animate: { backgroundColor: 'rgba(0, 0, 0, 0.6)' },
-  exit: { backgroundColor: 'rgba(0, 0, 0, 0)' },
-  transition: {
-    type: 'spring',
-    stiffness: 260,
-    damping: 20
-  }
-})`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Container = styled(motion.div)`
   background-color: #171717;
   height: 550px;

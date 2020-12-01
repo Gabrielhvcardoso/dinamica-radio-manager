@@ -2,7 +2,8 @@ import React, { SyntheticEvent } from 'react';
 import { Container } from './styles';
 
 interface BackdropProps {
-  onClick: (e: SyntheticEvent) => void,
+  onClick?: (e: SyntheticEvent) => void,
+  onMouseDown?: (e: SyntheticEvent) => void,
   shade?: boolean
 }
 
@@ -13,6 +14,7 @@ const Backdrop: React.FC<BackdropProps> = (props) => {
       animate={{ backgroundColor: (props.shade ?? true) ? 'rgba(0, 0, 0, 0.6)' : 'rgba(0, 0, 0, 0)' }}
       exit={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
       onClick={props.onClick}
+      onMouseDown={props.onMouseDown}
     >
       { props.children }
     </Container>
