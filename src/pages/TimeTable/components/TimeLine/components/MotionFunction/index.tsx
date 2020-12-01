@@ -34,7 +34,7 @@ const MotionFunction: React.FC<MotionFunctionProps> = ({ item, measureUnit }) =>
             duration={resolveDecimalTime(duration)}
             startAt={resolveDecimalTime(startAt)}
             endAt={resolveDecimalTime(startAt + duration)}
-            id={`program-${hash}`}
+            id={hash}
             measureUnit={measureUnit}
             moveProgram={moveProgram}
             order={order}

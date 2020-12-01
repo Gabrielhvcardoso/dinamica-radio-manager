@@ -101,13 +101,12 @@ const handleResize = (
   });
 };
 
-const resize = (e: MouseEvent, elementId: string, measureUnit: number, setProgramDuration: (programHash: string, duration: number) => void) => {
-  const element = document.getElementById(elementId);
+const resize = (e: MouseEvent, programHash: string, measureUnit: number, setProgramDuration: (programHash: string, duration: number) => void) => {
+  const element = document.getElementById(programHash);
 
   if (element) {
     const elementWidth = e.pageX - element.getBoundingClientRect().left;
     const durationInHours = Math.round((elementWidth * 60) / measureUnit / 5) * 5 / 60;
-    const programHash = elementId.split('-')[1];
     setProgramDuration(programHash, durationInHours);
   }
 };

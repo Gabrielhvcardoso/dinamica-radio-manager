@@ -128,10 +128,7 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
     reorder(newPrograms);
   };
 
-  const moveProgram = (dragDirtyHash: string, hoverDirtyHash: string) => {
-    const dragHash = dragDirtyHash.split('-')[1];
-    const hoverHash = hoverDirtyHash.split('-')[1];
-
+  const moveProgram = (dragHash: string, hoverHash: string) => {
     const dragIndex = programs.findIndex((el) => el.hash === dragHash);
     const hoverIndex = programs.findIndex((el) => el.hash === hoverHash);
 
