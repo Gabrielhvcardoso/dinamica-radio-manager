@@ -1,19 +1,29 @@
 import React, { useContext, useState } from 'react';
 import { Portal } from 'react-portal';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CategoryList, CategoryTag, Container, ImageEdit, ImageHeader, ImageOverlay, Title } from './styles';
+import { CategoryList, CategoryTag, Container, ImageDelete, ImageEdit, ImageHeader, ImageOverlay, Title } from './styles';
 import { Icon } from '@mdi/react';
-import { mdiImageEditOutline, mdiClose } from '@mdi/js';
+import { mdiImageEditOutline, mdiDeleteOutline, mdiClose } from '@mdi/js';
 import update from 'immutability-helper';
 
 import CategoryPicker from './components/CategoryPicker';
 import ProgramsPageContext from '../../context';
 import { useFetch } from '../../../../hooks';
 import Backdrop from '../../../../components/Backdrop';
+import Alert from '../../../../components/Alert';
 
 const ProgramContainer: React.FC = () => {
   const { categories, programs, setPrograms, selected, setSelected, setSelectedCategories } = useContext(ProgramsPageContext);
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [isCategoryPicker, setIsCategoryPicker] = useState<boolean>(false);
+
+  const [error, setError] = useState<string | null>(null);
+  const showError = (message: string) => {
+    setError(message);
+    setTimeout(() => {
+      setError(null);
+    }, 4000);
+  };
 
   const onDismiss = () => setSelected(null);
 
@@ -54,11 +64,36 @@ const ProgramContainer: React.FC = () => {
     }
   };
 
+  const handleDelete = () => {
+    if (selected) {
+      const { programId } = selected;
+      const index = programs.findIndex(item => item.programId === programId);
+
+      useFetch.delete(`/pro/${programId}`, (response) => {
+        if (response.code === 'success') {
+          setPrograms(update(programs, {
+            $splice: [[index, 1]]
+          }));
+          onDismiss();
+        } else {
+          showError('Não foi possível remover este programa, tente novamente.');
+        }
+      });
+    }
+  };
+
   return (
     <Portal>
       <AnimatePresence>
         { selected && (
           <Backdrop onMouseDown={onDismiss}>
+            {
+              error && (
+                <Alert>
+                  { error }
+                </Alert>
+              )
+            }
             <Container onMouseDown={e => e.stopPropagation()} layoutId={selected?.toString()}>
 
               <AnimatePresence>
@@ -74,15 +109,23 @@ const ProgramContainer: React.FC = () => {
               <div style={{ margin: 20 }}>
                 <ImageOverlay>
                   <Title>{ selected?.title }</Title>
+                  <div>
+                    <input style={{ display: 'none' }} type="file" id="file" name="file" />
 
-                  <input style={{ display: 'none' }} type="file" id="file" name="file" />
-                  <ImageEdit htmlFor="file">
-                    <Icon path={mdiImageEditOutline}
-                      title="Alterar imagem"
-                      size={1}
-                      color="#ffffff"
-                    />
-                  </ImageEdit>
+                    <ImageDelete title={confirmDelete ? 'Clique para confirmar' : 'Excluir produto'} confirm={confirmDelete} onClick={confirmDelete ? () => handleDelete() : () => setConfirmDelete(true)}>
+                      <Icon path={mdiDeleteOutline}
+                        size={1}
+                        color={'white'}
+                      />
+                    </ImageDelete>
+
+                    <ImageEdit title="Alterar imagem" htmlFor="file">
+                      <Icon path={mdiImageEditOutline}
+                        size={1}
+                        color="#ffffff"
+                      />
+                    </ImageEdit>
+                  </div>
                 </ImageOverlay>
 
                 <CategoryList>

@@ -7,11 +7,30 @@ export const ImageHeader = styled.img`
   width: 100%;
 `;
 
+interface ImageDeleteProps {
+  confirm?: boolean
+}
+
+export const ImageDelete = styled.div<ImageDeleteProps>`
+  background-color: ${props => props.confirm ? '#ff000055' : '#00000055'};
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 5px;
+  padding: 8px;
+  transition: .2s;
+
+  &:hover {
+    background-color: ${props => props.confirm ? '#ff0000AA' : '#000000AA'};
+  }
+`;
+
 export const ImageEdit = styled.label`
   background-color: #00000055;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
+  margin-bottom: 5px;
   padding: 8px;
   transition: .2s;
 
@@ -41,13 +60,13 @@ export const Container = styled(motion.div).attrs({
 `;
 
 export const ImageOverlay = styled.div`
-  align-items: center;
+  align-items: flex-end;
   box-sizing: border-box;
   display: flex;
   height: 44px;
   justify-content: space-between;
   left: 0px;
-  padding: 0px 15px 20px;
+  padding: 0px 15px 5px;
   position: absolute;
   top: 110px;
   width: 100%;
@@ -58,6 +77,7 @@ export const Title = styled(motion.h1).attrs({
   animate: { translateX: 0, opacity: 1 },
   exit: { translateX: -100, opacity: 0 }
 })`
+  align-self: center;
   box-sizing: border-box;
   font-size: 32px;
   font-weight: 700;
