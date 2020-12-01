@@ -13,13 +13,11 @@ export const useFetch = {
     });
   },
 
-  post: async (url = '/', body: {}, onEnd = (data: any) => {}) => {
+  post: async (url = '/', body: {} | FormData, onEnd = (data: any) => {}) => {
     fetch(BASE_URL + url + '/', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
+      headers: { 'Content-Type': body instanceof FormData ? 'multipart/form-data' : 'application/json' },
+      body: body instanceof FormData ? body : JSON.stringify(body)
     }).then((response) => {
       response.json()
         .then(data => {
@@ -31,35 +29,25 @@ export const useFetch = {
     });
   },
 
-  put: async (url = '/', body: {}, onEnd = (data: any) => {}) => {
-    fetch(BASE_URL + url + '/', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    }).then((response) => {
+  put: async (url = '/', body: {} | FormData, onEnd = (data: any) => {}) => {
+    fetch(BASE_URL + url + '/', body instanceof FormData
+      ? {
+          method: 'PUT',
+          body
+        }
+      : {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        }).then((response) => {
       response.json()
         .then(data => {
           onEnd(data);
         })
         .catch(() => {
           onEnd({ code: 'error' });
-        });
-    });
-  },
-
-  postFormData: async (url = '/', body: FormData, onEnd = (data: any) => {}) => {
-    fetch(BASE_URL + url, {
-      method: 'POST',
-      body
-    }).then((response) => {
-      response.json()
-        .then(data => {
-          onEnd(data);
-        })
-        .catch(() => {
-          onEnd({ code: 'error', message: 'Erro genérico' });
         });
     });
   },

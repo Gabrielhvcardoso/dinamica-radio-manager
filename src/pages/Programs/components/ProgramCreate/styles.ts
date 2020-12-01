@@ -42,13 +42,19 @@ export const Menu = styled(motion.div).attrs({
   max-width: 95%;
 `;
 
-export const TopImage = styled.div`
+export const TopImage = styled(motion.img).attrs({
+  initial: { opacity: 0, translateY: -50 },
+  animate: { opacity: 1, translateY: 0 },
+  exit: { opacity: 0, translateY: -50 }
+})`
   background-color: #30303033;
   position: absolute;
   height: 100px;
+  object-fit: cover;
   top: 0px;
   left: 0px;
   right: 0px;
+  width: 100%;
 `;
 
 export const Headline = styled.span`
