@@ -50,9 +50,10 @@ export const Program = styled(motion.img)`
   border-radius: 10px;
   cursor: pointer;
   height: 100px;
-  width: 100px;
+  object-fit: cover;
   margin: 5px;
   transition: .2s;
+  width: 100px;
 
   &:hover {
     transform: translate3d(0px, 2px, 150px) scale(1.05);
