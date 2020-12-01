@@ -68,8 +68,6 @@ const ProgramCreate: React.FC = () => {
         return showError(errors[errorIndex].message);
       }
 
-      alert(errorIndex);
-
       const data = new FormData();
 
       data.append('clientId', (clientId ?? 0).toString());
@@ -92,9 +90,12 @@ const ProgramCreate: React.FC = () => {
                   title: programTitle
                 }
             ]
+
           }));
 
           setOpenProduct(false);
+          setProgramTitle('');
+          setProgramFile(null);
         } else {
           showError('Não foi possível criar esse produto, tente novamente mas tarde ou entre em contato com os desenvolvedores');
         }
