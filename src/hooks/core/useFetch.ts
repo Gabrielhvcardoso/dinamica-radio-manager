@@ -1,7 +1,7 @@
 const BASE_URL = 'http://dmihost.com.br:21076';
 
 export const useFetch = {
-  get: (url = '/', onEnd = (data: {}) => {}) => {
+  get: (url = '/', onEnd = (data: any) => {}) => {
     Promise.all([
       fetch(BASE_URL + url, {
         method: 'GET'

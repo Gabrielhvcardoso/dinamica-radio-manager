@@ -6,6 +6,7 @@ import { Program } from '../../types/Program';
 import crypto from 'crypto';
 
 import AuthContext from '../../context/auth';
+import DataContext from '../../context/data';
 
 export interface ScheduleProgram extends Program {
   order: number,
@@ -48,13 +49,13 @@ const TimeTableContext = createContext({} as TimeTableInterface);
 
 export const TimeTableContextProvider: React.FC = ({ children }) => {
   const { clientId } = useContext(AuthContext);
+  const { schedule, setSchedule } = useContext(DataContext);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [isSelectorActive, setIsSelectorActive] = useState<boolean>(false);
   const [filter, setFilter] = useState<number>(0);
 
-  const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [programs, setPrograms] = useState<Array<ScheduleProgram>>([]);
 
   // Feedback Controllers
@@ -64,12 +65,12 @@ export const TimeTableContextProvider: React.FC = ({ children }) => {
   // Call to API
 
   useEffect(() => {
-    useFetch.get('/sch', (response: any) => {
-      setSchedule(response);
-      setPrograms(response.sunday);
+    if (schedule !== null) {
+      setSchedule(schedule);
+      setPrograms(schedule.sunday);
       setIsLoading(false);
-    });
-  }, []);
+    };
+  }, [schedule]);
 
   // Filter switcher
 
