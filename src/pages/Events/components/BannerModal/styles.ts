@@ -8,6 +8,7 @@ export const ImageBackdrop = styled.img`
   width: 100%;
   left: 0px;
   object-fit: cover;
+  pointer-events: none;
   position: absolute;
   top: 0px;
 `;
@@ -122,6 +123,7 @@ export const Button = styled.button`
   cursor: pointer;
   font-size: 16px;
   height: 40px;
+  margin-left: 10px;
   padding: 0px 20px;
   transition: .2s;
 

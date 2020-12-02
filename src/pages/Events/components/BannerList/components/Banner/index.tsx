@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Container, Title } from './styles';
 
 import { Banner as BannerType } from '../../../../../../types/Banner';
-import colors from '../../../../../../utils/colors';
 import EventsContext from '../../../../context';
 import { format } from 'date-fns';
 
@@ -12,12 +11,12 @@ interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = ({ create, banner }) => {
-  const { setSelected } = useContext(EventsContext);
+  const { setSelected, setIsCreating } = useContext(EventsContext);
 
   if (create && !banner) {
     return (
-    <Container color={colors[Math.floor(Math.random() * 2)].hex()}>
-      <Title>Criar</Title>
+    <Container onClick={() => setIsCreating(true)} style={{ padding: 20 }} color="#303030">
+      <Title>Criar novo</Title>
     </Container>
     );
   }

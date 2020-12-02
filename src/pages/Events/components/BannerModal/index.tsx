@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import update from 'immutability-helper';
+import React, { createRef, useContext, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Backdrop from '../../../../components/Backdrop';
 import { Button, CloseButton, Container, Detail, Headline, Helper, ImageBackdrop, ImagePicker, Section, Textarea, TextInput, Title } from './styles';
@@ -9,19 +10,38 @@ import { selectStyles } from './selectStyles';
 import { formatDistanceToNow, addDays, format, addHours } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
+import AuthContext from '../../../../context/auth';
 import MobileContext from '../../../../context/mobile';
 import ProgramsContext from '../../../../context/data';
 import EventsContext from '../../context';
 
+import { Banner } from '../../../../types/Banner';
+
 import { mdiClose } from '@mdi/js';
 import { Icon } from '@mdi/react';
+import { useFetch } from '../../../../hooks';
+import Alert from '../../../../components/Alert';
 
 const BannerModal: React.FC = () => {
+  const { clientId } = useContext(AuthContext);
   const { isMobile } = useContext(MobileContext);
   const { programs: contextPrograms, categories: contextCategories } = useContext(ProgramsContext);
-  const { selected, setSelected } = useContext(EventsContext);
+  const { selected, setSelected, isCreating, setIsCreating, events, setEvents } = useContext(EventsContext);
 
-  const onDismiss = () => setSelected(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const showMessage = (msg: string) => {
+    setMessage(msg);
+    setTimeout(() => {
+      setMessage(null);
+    }, 3000);
+  };
+
+  const imageRef = createRef<HTMLInputElement>();
+
+  const onDismiss = () => {
+    setSelected(null);
+    setIsCreating(false);
+  };
 
   const programs = [
     { value: 0, label: 'Nenhum' },
@@ -33,14 +53,112 @@ const BannerModal: React.FC = () => {
     ...contextCategories.map(({ categoryId, name }) => ({ value: categoryId, label: name }))
   ];
 
-  const [event, setEvent] = useState(selected);
-  useEffect(() => setEvent(selected), [selected]);
+  const [event, setEvent] = useState<Banner | null>(selected);
+  const [eventImage, setEventImage] = useState<string | ArrayBuffer | null>(null);
+  useEffect(() => isCreating ? setEvent({} as Banner) : setEvent(selected), [selected, isCreating]);
+
+  const onProgramFileChange = () => {
+    if (imageRef.current?.files) {
+      const file = imageRef.current.files[0];
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+      reader.onloadend = (e) => {
+        setEventImage(reader.result);
+      };
+    }
+  };
+
+  const handleRemoveImage = () => {
+    useFetch.get(`/ban/rm/${selected?.bannerId}`, (response: any) => {
+      if (response.code === 'success') {
+        const index = events.findIndex(({ bannerId }) => bannerId === event?.bannerId);
+        setEvents(update(events, { [index]: { $set: { ...events[index], image: undefined } } }));
+        showMessage('Image removida!');
+      } else {
+        showMessage('Não foi possível remover a imagem desse evento. Tente novamente.');
+      }
+    });
+  };
+
+  const handleDelete = () => {
+    useFetch.delete(`/ban/${selected?.bannerId}`, (response: any) => {
+      if (response.code === 'success') {
+        const index = events.findIndex(({ bannerId }) => bannerId === event?.bannerId);
+        setEvents(update(events, {
+          $splice: [[index, 1]]
+        }));
+        onDismiss();
+      }
+    });
+  };
+
+  const handleSave = () => {
+    console.log(event);
+
+    const data = new FormData();
+
+    clientId && data.append('clientId', clientId.toString());
+    event?.title && data.append('title', event.title);
+    event?.description && data.append('description', event.description);
+    event?.program?.programId && data.append('targetProgram', event.program.programId.toString());
+    event?.category?.categoryId && data.append('targetCategory', event.category?.categoryId.toString());
+    event?.link && data.append('link', event?.link);
+    event?.expiresAt && data.append('expiresAt', event.expiresAt.toString());
+    imageRef?.current?.files && data.append('file', imageRef.current.files[0]);
+
+    if (isCreating) {
+      useFetch.put('/ban', data, (response) => {
+        if (response.code === 'success') {
+          showMessage('Evento salvo com sucesso!');
+          if (event) {
+            setEvents(update(events, {
+              $push: [{
+                ...event,
+                createdAt: new Date().getTime(),
+                image: typeof (eventImage) === 'string' ? eventImage : event.image
+              }]
+            }));
+          }
+        } else {
+          showMessage('Ocorreu um erro ao criar esse evento.');
+        }
+      });
+    } else {
+      useFetch.post(`/ban/${event?.bannerId}`, data, (response) => {
+        if (response.code === 'success') {
+          const index = events.findIndex(({ bannerId }) => bannerId === event?.bannerId);
+          if (event) {
+            setEvents(update(events, {
+              [index]: {
+                $set: {
+                  ...event,
+                  image: typeof (eventImage) === 'string' ? eventImage : event.image
+                }
+              }
+            }));
+          }
+          showMessage('Alterações salvas com sucesso!');
+        } else {
+          showMessage('Ocorreu um erro ao editar esse evento.');
+        }
+      });
+    }
+  };
 
   return (
     <AnimatePresence>
       {
         event && (
           <Backdrop onMouseDown={onDismiss}>
+            {
+              message && (
+                <Alert>
+                  { message }
+                </Alert>
+              )
+            }
+
             <Container isMobile={isMobile} onMouseDown={e => e.stopPropagation()} layoutId={`banner-${event.bannerId}`}>
               <CloseButton onClick={onDismiss}>
                 <Icon path={mdiClose}
@@ -48,17 +166,30 @@ const BannerModal: React.FC = () => {
                   color="white"
                 />
               </CloseButton>
-              <Title>{ event.title !== '' ? event.title : 'Criar evento' }</Title>
 
-              { event.image && <ImageBackdrop src={event.image} /> }
+              <Title>{ event.title !== '' ? event.title : 'Criar evento' }</Title>
+              <Section>
+                <Headline>Título</Headline>
+                <TextInput
+                  type="text"
+                  value={event.title}
+                  onChange={e => setEvent({
+                    ...event,
+                    title: e.target.value
+                  })}
+                />
+              </Section>
+
+              { (event.image || eventImage) && <ImageBackdrop src={typeof (eventImage) === 'string' ? eventImage : event.image || undefined} /> }
 
               <Detail>
-                { 'Criado há ' }
-                { formatDistanceToNow(event.createdAt, { locale: ptBR }) }
                 {
-                  event.expiresAt
-                    ? (' - expira em ' + formatDistanceToNow(addDays(event.expiresAt, 2), { locale: ptBR }) + ' - (' + format(event.expiresAt, "iiii, dd 'de' MMMM 'de' yyyy 'às' HH:mm", { locale: ptBR }) + ')')
-                    : <></>
+                  selected && (
+                    'Criado há ' + formatDistanceToNow(event.createdAt, { locale: ptBR }) +
+                    (event.expiresAt
+                      ? (' - expira em ' + formatDistanceToNow(addDays(event.expiresAt ?? 0, 2), { locale: ptBR }) + ' - (' + format(event.expiresAt ?? 0, "iiii, dd 'de' MMMM 'de' yyyy 'às' HH:mm", { locale: ptBR }) + ')')
+                      : <></>)
+                  )
                 }
               </Detail>
               <br />
@@ -80,7 +211,7 @@ const BannerModal: React.FC = () => {
 
                 <Section style={{ width: isMobile ? '100%' : 200 }}>
                   <Headline>Imagem</Headline>
-                  <input type="file" id="filepicker" style={{ display: 'none' }} />
+                  <input ref={imageRef} onChange={onProgramFileChange} type="file" id="filepicker" style={{ display: 'none' }} />
                   <ImagePicker htmlFor="filepicker">
                     Selecione um arquivo
                   </ImagePicker>
@@ -155,7 +286,9 @@ const BannerModal: React.FC = () => {
               </div>
 
               <div style={{ display: 'flex', marginTop: 20, justifyContent: 'flex-end' }}>
-                <Button>Salvar alterações</Button>
+                { selected && selected.image && <Button onClick={handleRemoveImage}>Remover imagem</Button> }
+                { selected && <Button onClick={handleDelete}>Excluir evento</Button> }
+                <Button onClick={handleSave}>{ isCreating ? 'Criar evento' : 'Salvar alterações'}</Button>
               </div>
 
             </Container>
