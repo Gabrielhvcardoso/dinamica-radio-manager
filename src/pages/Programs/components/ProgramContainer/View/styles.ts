@@ -25,7 +25,7 @@ export const ImageDelete = styled.div<ImageDeleteProps>`
   }
 `;
 
-export const ImageEdit = styled.label`
+export const ImageEdit = styled.div`
   background-color: #00000055;
   border-radius: 50%;
   cursor: pointer;

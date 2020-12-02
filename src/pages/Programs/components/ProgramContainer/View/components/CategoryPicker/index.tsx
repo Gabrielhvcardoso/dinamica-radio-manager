@@ -3,10 +3,10 @@ import React, { useContext, useState } from 'react';
 import { Portal } from 'react-portal';
 import { Backdrop, Menu, MenuItem } from './styles';
 
-import Alert from '../../../../../../components/Alert';
+import Alert from '../../../../../../../components/Alert';
 
-import ProgramsPageContext from '../../../../context';
-import { useFetch } from '../../../../../../hooks';
+import ProgramsPageContext from '../../../../../context';
+import { useFetch } from '../../../../../../../hooks';
 
 interface CategoryPickerProps {
   onDismiss: () => void;

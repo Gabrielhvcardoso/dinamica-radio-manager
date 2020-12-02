@@ -14,11 +14,17 @@ export const useFetch = {
   },
 
   post: async (url = '/', body: {} | FormData, onEnd = (data: any) => {}) => {
-    fetch(BASE_URL + url + '/', {
-      method: 'POST',
-      headers: { 'Content-Type': body instanceof FormData ? 'multipart/form-data' : 'application/json' },
-      body: body instanceof FormData ? body : JSON.stringify(body)
-    }).then((response) => {
+    fetch(BASE_URL + url + '/', body instanceof FormData
+      ? {
+          method: 'POST',
+          body
+        }
+      : {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }
+    ).then((response) => {
       response.json()
         .then(data => {
           onEnd(data);
